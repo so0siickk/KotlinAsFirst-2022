@@ -10,7 +10,7 @@ import kotlin.math.*
 
 /**
  * Пример
- *
+ *agsgsgs
  * Вычисление квадрата целого числа
  */
 fun sqr(x: Int) = x * x

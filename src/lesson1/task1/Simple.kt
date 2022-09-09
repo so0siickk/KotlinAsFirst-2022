@@ -78,14 +78,12 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    var metr: Double = 0.0
-    var metrint: Int? = null
-    val constmetr = 4.445
-    metr = (vershoks * constmetr + sagenes * constmetr * 48 + arshins * constmetr * 16)
-    metrint = metr.toInt()
-    metr = metrint/ 100.0
-    return metr
-}
+        var metr: Double = 0.0
+        var metrint: Int? = null
+        val constmetr = 4.445
+        metr = (vershoks * constmetr + sagenes * constmetr * 48 + arshins * constmetr * 16) / 100.0
+        return metr
+    }
 
 /**
  * Тривиальная (1 балл)
@@ -141,9 +139,9 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    var summ :Double = initial+(0.1*initial)
-    summ+=(0.1*summ)
-    return summ+(0.1*summ)
+    var summ :Double = initial+(percent.toDouble()*initial)
+    summ+=(percent*summ)
+    return summ+(percent*summ)
 }
 
 /**

@@ -139,12 +139,15 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    var summ :Double = initial+(percent.toDouble()*initial)
-    summ+=(percent*summ)
-    return summ+(percent*summ)
+    val Tpercent: Double = percent / 100.0
+    var summ: Double = initial + (Tpercent * initial)
+    println(summ)
+    summ = ((1.0 + Tpercent) * summ)
+    println(summ)
+    return ((1.0 + Tpercent) * summ)
 }
 
-/**
+    /**
  * Простая (2 балла)
  *
  * Пользователь задает целое трехзначное число (например, 478).

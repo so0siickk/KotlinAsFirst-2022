@@ -87,6 +87,49 @@ fun timeForHalfWay(
     var s2:Double = v2*t2
     var s3:Double = v3*t3
     var fulls:Double = s1+s2+s3
+    if (v1==0.0){
+        if ((v2 != 0.0) and (v3 != 0.0)){
+            var midspeed = fulls / (t2 + t3)
+            return fulls / midspeed / 2 + t1
+        }
+        if (v2 == 0.0){
+            var midspeed = fulls / (t3)
+            return fulls / midspeed / 2 + t2 + t1
+        }
+        if (v3 == 0.0){
+            var midspeed = fulls / (t2)
+            return fulls / midspeed / 2 + t1 + t3
+        }
+    }
+    if (v2==0.0){
+        if ((v1 != 0.0) and (v3 != 0.0)){
+            var midspeed = fulls / (t1 + t3)
+            return fulls / midspeed / 2 + t1
+        }
+        if (v1 == 0.0){
+            var midspeed = fulls / (t3)
+            return fulls / midspeed / 2 + t2 + t1
+        }
+        if (v3 == 0.0){
+            var midspeed = fulls / (t1)
+            return fulls / midspeed / 2 + t3 + t2
+        }
+    }
+    if (v3==0.0){
+        if ((v2 != 0.0) and (v1 != 0.0)){
+            var midspeed = fulls / (t2 + t1)
+            return fulls / midspeed / 2 + t3
+        }
+        if (v2 == 0.0){
+            var midspeed = fulls / (t1)
+            return fulls / midspeed / 2 + t3 + t2
+        }
+        if (v1 == 0.0){
+            var midspeed = fulls / (t2)
+            return fulls / midspeed / 2 + t1 + t3
+
+        }
+    }
     var midspeed = fulls / (t1 + t2 + t3)
     return fulls / midspeed / 2
 }

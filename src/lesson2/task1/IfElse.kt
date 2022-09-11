@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -81,7 +82,14 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    var s1:Double = v1*t1
+    var s2:Double = v2*t2
+    var s3:Double = v3*t3
+    var fulls:Double = s1+s2+s3
+    var midspeed = fulls / (t1 + t2 + t3)
+    return fulls / midspeed / 2
+}
 
 /**
  * Простая (2 балла)
@@ -96,7 +104,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    if ((kingX == rookX1) or (kingY == rookY1)) {
+        if ((kingX == rookX2) or (kingY == rookY2)) {
+            return 3
+        }
+        return 1}
+    if ((kingX == rookX2) or (kingY == rookY2)) {
+        return 2}
+    return 0
+}
 
 /**
  * Простая (2 балла)
@@ -112,7 +129,18 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    if ((kingX == rookX) or (kingY == rookY)) {
+        if ((max(kingX,bishopX)- min(kingX,bishopX))==(max(kingY,bishopY)- min(bishopY,kingY))) {
+            return 3
+        }
+        return 1
+    }
+    if ((max(kingX,bishopX)- min(kingX,bishopX))==(max(kingY,bishopY)- min(bishopY,kingY))) {
+        return 2
+    }
+    return 0
+}
 
 /**
  * Простая (2 балла)
@@ -122,8 +150,22 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
-
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val numbers: Array<Double> = arrayOf(a,b,c)
+    numbers.sort()
+    if ((numbers[0]+numbers[1])>numbers[2]){
+        if((numbers[2]*numbers[2])<(numbers[0]*numbers[0]+numbers[1]*numbers[1])){
+            return 0
+        }
+        if (numbers[2]*numbers[2]==(numbers[0]*numbers[0]+numbers[1]*numbers[1])){
+            return 1
+        }
+        if (numbers[2]*numbers[2]>(numbers[0]*numbers[0]+numbers[1]*numbers[1])){
+            return 2
+        }
+    }
+    return -1
+}
 /**
  * Средняя (3 балла)
  *
@@ -132,4 +174,22 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if ((a <= c) and (b >= c)){
+        if (b<=d){
+            return b - c
+        }
+        else {
+            return  d -c
+        }
+    }
+    if ((a >= c) and (a<=d)){
+        if (b<=d){
+            return b - a
+        }
+        else {
+            return d - a
+        }
+    }
+    return -1
+}

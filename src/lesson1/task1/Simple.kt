@@ -3,6 +3,7 @@
 package lesson1.task1
 
 import kotlin.math.*
+import java.lang.Math.toRadians
 
 // Урок 1: простые функции
 // Максимальное количество баллов = 5
@@ -65,12 +66,10 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    return seconds + minutes * 60 + hours * 3600
-}
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = seconds + minutes * 60 + hours * 3600
 
 
-    /**
+/**
  * Тривиальная (1 балл)
  *
  * Пользователь задает длину отрезка в саженях, аршинах и вершках (например, 8 саженей 2 аршина 11 вершков).
@@ -78,12 +77,9 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-        var metr: Double = 0.0
-        var metrint: Int? = null
-        val constmetr = 4.445
-        metr = (vershoks * constmetr + sagenes * constmetr * 48 + arshins * constmetr * 16) / 100.0
-        return metr
-    }
+    val constmetr = 4.445
+    return (vershoks + sagenes * 48 + arshins * 16) * constmetr / 100.0
+}
 
 /**
  * Тривиальная (1 балл)
@@ -94,7 +90,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
     var rad: Double
     rad = sec / 3600.0 + min / 60.0 + deg
-    return Math.toRadians(rad)
+    return toRadians(rad)
 }
 
 
@@ -104,8 +100,8 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double  {
-    return sqrt((max(x1,x2)- min(x1,x2)).pow(2.0) + (max(y1,y2)- min(y1,y2)).pow(2.0))
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
+    return sqrt((max(x1, x2) - min(x1, x2)).pow(2.0) + (max(y1, y2) - min(y1, y2)).pow(2.0))
 }
 
 /**
@@ -114,11 +110,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double  {
  * Пользователь задает целое число, больше или равно 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int {
-    if ((number / 100)<10) {
-        return number / 100
-    }else return (number / 100) % 10
-}
+fun thirdDigit(number: Int): Int = if ((number / 100) < 10) (number / 100) else ((number / 100) % 10)
 
 /**
  * Простая (2 балла)
@@ -127,9 +119,8 @@ fun thirdDigit(number: Int): Int {
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    return (hoursArrive-hoursDepart)*60+(minutesArrive-minutesDepart)
-}
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
+    (hoursArrive - hoursDepart) * 60 + (minutesArrive - minutesDepart)
 
 /**
  * Простая (2 балла)
@@ -139,25 +130,23 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val Tpercent: Double = percent / 100.0
-    var summ: Double = initial + (Tpercent * initial)
-    println(summ)
-    summ = ((1.0 + Tpercent) * summ)
-    println(summ)
-    return ((1.0 + Tpercent) * summ)
+    val tpercent: Double = percent / 100.0 + 1.0
+    var summ: Double = initial * tpercent
+    summ *= tpercent
+    return tpercent * summ
 }
 
-    /**
+/**
  * Простая (2 балла)
  *
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    var otvet :String = number.toString()
-    var cifraf:Char = otvet[0]
-    var cifrasr:Char = otvet[1]
-    var cifral:Char = otvet[2]
-    otvet = cifral.toString()+ cifrasr.toString() + cifraf.toString()
+    var otvet: String = number.toString()
+    var numberF: Char = otvet[0]
+    var numberS: Char = otvet[1]
+    var numberT: Char = otvet[2]
+    otvet = numberT.toString() + numberS.toString() + numberF.toString()
     return otvet.toInt()
 }

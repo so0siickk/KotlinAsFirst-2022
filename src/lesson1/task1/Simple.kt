@@ -76,10 +76,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = seconds + minutes * 6
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    val constmetr = 4.445
-    return (vershoks + sagenes * 48 + arshins * 16) * constmetr / 100.0
-}
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = (vershoks + sagenes * 48 + arshins * 16) * 4.445 / 100.0
 
 /**
  * Тривиальная (1 балл)
@@ -88,8 +85,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
-    var rad: Double
-    rad = sec / 3600.0 + min / 60.0 + deg
+    var rad = sec / 3600.0 + min / 60.0 + deg
     return toRadians(rad)
 }
 
@@ -100,9 +96,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    return sqrt((max(x1, x2) - min(x1, x2)).pow(2.0) + (max(y1, y2) - min(y1, y2)).pow(2.0))
-}
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt((x1 - x2).pow(2.0) + (y1 - y2).pow(2.0))
 
 /**
  * Простая (2 балла)
@@ -110,7 +104,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Пользователь задает целое число, больше или равно 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = if ((number / 100) < 10) (number / 100) else ((number / 100) % 10)
+fun thirdDigit(number: Int): Int = (number.toString().reversed()).toInt()
 
 /**
  * Простая (2 балла)
@@ -130,10 +124,10 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val tpercent: Double = percent / 100.0 + 1.0
-    var summ: Double = initial * tpercent
-    summ *= tpercent
-    return tpercent * summ
+    val yearPercent = percent / 100.0 + 1.0
+    var summ = initial * yearPercent
+    summ *= yearPercent
+    return yearPercent * summ
 }
 
 /**
@@ -144,9 +138,9 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  */
 fun numberRevert(number: Int): Int {
     var otvet: String = number.toString()
-    var numberF: Char = otvet[0]
-    var numberS: Char = otvet[1]
-    var numberT: Char = otvet[2]
+    var numberF = otvet[0]
+    var numberS = otvet[1]
+    var numberT = otvet[2]
     otvet = numberT.toString() + numberS.toString() + numberF.toString()
     return otvet.toInt()
 }

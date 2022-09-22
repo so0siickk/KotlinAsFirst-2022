@@ -85,55 +85,12 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    var s1: Double = v1 * t1
-    var s2: Double = v2 * t2
-    var s3: Double = v3 * t3
-    var fulls: Double = s1 + s2 + s3
-    if (v1 == 0.0) {
-        if ((v2 != 0.0) and (v3 != 0.0)) {
-            var midspeed = fulls / (t2 + t3)
-            return fulls / midspeed / 2 + t1
-        }
-        if (v2 == 0.0) {
-            var midspeed = fulls / (t3)
-            return fulls / midspeed / 2 + t2 + t1
-        }
-        if (v3 == 0.0) {
-            var midspeed = fulls / (t2)
-            return fulls / midspeed / 2 + t1 + t3
-        }
+    var halfS = (v1 * t1 + v2 * t2 + v3 * t3) / 2
+    return when {
+        (v1 * t1) >= halfS -> halfS / (v1 * t1) * t1
+        (v1 * t1 + v2 * t2) >= halfS -> (halfS - v1 * t1) / (v2 * t2) * t2 + t1
+        else -> (halfS - v1 * t1 - v2 * t2) / (v3 * t3) * t3 + t2 + t1
     }
-    if (v2 == 0.0) {
-        if ((v1 != 0.0) and (v3 != 0.0)) {
-            var midspeed = fulls / (t1 + t3)
-            return fulls / midspeed / 2 + t1
-        }
-        if (v1 == 0.0) {
-            var midspeed = fulls / (t3)
-            return fulls / midspeed / 2 + t2 + t1
-        }
-        if (v3 == 0.0) {
-            var midspeed = fulls / (t1)
-            return fulls / midspeed / 2 + t3 + t2
-        }
-    }
-    if (v3 == 0.0) {
-        if ((v2 != 0.0) and (v1 != 0.0)) {
-            var midspeed = fulls / (t2 + t1)
-            return fulls / midspeed / 2 + t3
-        }
-        if (v2 == 0.0) {
-            var midspeed = fulls / (t1)
-            return fulls / midspeed / 2 + t3 + t2
-        }
-        if (v1 == 0.0) {
-            var midspeed = fulls / (t2)
-            return fulls / midspeed / 2 + t1 + t3
-
-        }
-    }
-    var midspeed = fulls / (t1 + t2 + t3)
-    return fulls / midspeed / 2
 }
 
 /**
@@ -191,12 +148,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val minLine = sqr(numbers[0])
     val midLine = sqr(numbers[1])
     val maxLine = sqr(numbers[2])
-    when {
-        (numbers[0] + numbers[1]) < numbers[2] -> return -1
-        maxLine > (midLine + minLine) -> return 2
-        maxLine == (midLine + minLine) -> return 1
-        maxLine < (midLine + minLine) -> return 0
-        else -> return 0
+    return when {
+        (numbers[0] + numbers[1]) < numbers[2] -> -1
+        maxLine > (midLine + minLine) -> 2
+        maxLine == (midLine + minLine) -> 1
+        maxLine < (midLine + minLine) -> 0
+        else -> 0
     }
 }
 

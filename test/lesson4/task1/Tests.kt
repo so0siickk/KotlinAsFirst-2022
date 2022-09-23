@@ -84,14 +84,14 @@ class Tests {
         assertEquals("3 + 6 + 5 + 4 + 9 = 27", buildSumExample(listOf(3, 6, 5, 4, 9)))
     }
 
-//    @Test
-//    @Tag("2")
-//    fun abs() {
-//        assertEquals(0.0, abs(listOf()), 1e-5)
-//        assertEquals(3.0, abs(listOf(3.0)), 1e-5)
-//        assertEquals(5.0, abs(listOf(3.0, -4.0)), 1e-5)
-//        assertEquals(8.774964, abs(listOf(4.0, -5.0, 6.0)), 1e-5)
-//    }
+    @Test
+    @Tag("2")
+    fun abs() {
+        assertEquals(0.0, abs(listOf()), 1e-5)
+        assertEquals(3.0, abs(listOf(3.0)), 1e-5)
+        assertEquals(5.0, abs(listOf(3.0, -4.0)), 1e-5)
+        assertEquals(8.774964, abs(listOf(4.0, -5.0, 6.0)), 1e-5)
+    }
 
     @Test
     @Tag("2")

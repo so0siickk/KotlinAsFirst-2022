@@ -75,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number = n.toDouble()
+    var number = abs(n).toDouble()
     do {
         number /= 10
         count++
@@ -119,7 +119,7 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    for (i in n / 2 + 1 downTo 2) {
+    for (i in n / 2 downTo 2) {
         if (n % i == 0) return i
     }
     return 1
@@ -159,7 +159,7 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m, n) until m * n) {
+    for (i in max(m, n) until m * n / 2) {
         if ((i % m == 0) && (i % n == 0)) return i
     }
     return m * n

@@ -5,7 +5,6 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.math.abs
 

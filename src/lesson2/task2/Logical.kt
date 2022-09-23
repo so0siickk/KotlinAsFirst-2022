@@ -70,7 +70,7 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean = when {
-    (r2 - r1) >= -sqrt(sqr(y2 - y1) + sqr(x2 - x1)) -> true
+    (r2 - r1) >= (sqrt(sqr(y2 - y1) + sqr(x2 - x1))) -> true
     else -> false
 }
 
@@ -84,10 +84,9 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val brickX = min(a, b)
-    val brickY = min(b, c)
+    val sizes = intArrayOf(a,b,c).sorted()
     return when {
-        (min(brickX, brickY) <= min(r, s)) && (max(brickX, brickY) <= max(r, s)) -> true
+        (sizes[0] <= min(r, s)) && (sizes[1] <= max(r, s)) -> true
         else -> false
     }
 }

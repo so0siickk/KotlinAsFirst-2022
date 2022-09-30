@@ -134,10 +134,10 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = (percent / 100.0 +
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    var otvet: String = number.toString()
-    var numberF = otvet[0]
-    var numberS = otvet[1]
-    var numberT = otvet[2]
-    otvet = numberT.toString() + numberS.toString() + numberF.toString()
-    return otvet.toInt()
+    var answer = number.toString()
+    var numberF = answer[0]
+    var numberS = answer[1]
+    var numberT = answer[2]
+    answer = numberT.toString() + numberS.toString() + numberF.toString()
+    return answer.toInt()
 }

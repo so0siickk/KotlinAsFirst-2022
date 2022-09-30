@@ -118,12 +118,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    for (i in n / 2 downTo 2) {
-        if (n % i == 0) return i
-    }
-    return 1
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая (2 балла)
@@ -159,7 +154,7 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m, n) until m * n / 2) {
+    for (i in max(m, n) - 1 until m * n) {
         if ((i % m == 0) && (i % n == 0)) return i
     }
     return m * n
@@ -188,11 +183,11 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var numbers = emptyArray<Int>()
+    var numbers = mutableListOf<Int>()
     var oldNumber = n
     var newNumber = 0.0
     while (oldNumber > 0) {
-        numbers += oldNumber % 10
+        numbers.add(oldNumber % 10)
         oldNumber = oldNumber.div(10)
     }
     for (i in 0 until numbers.count()) newNumber += numbers[i] * 10.0.pow(numbers.count() - 1 - i)
@@ -209,16 +204,8 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var numbers = emptyArray<Int>()
-    var oldNumber = n
-    while (oldNumber > 0) {
-        numbers += oldNumber % 10
-        oldNumber = oldNumber.div(10)
-    }
-    for (i in 0 until numbers.count() / 2) {
-        if (numbers[i] != numbers[numbers.count() - 1 - i]) return false
-    }
-    return true
+    return if (n <= 2147447412) (n == revert(n))
+    else false
 }
 
 /**
@@ -230,12 +217,11 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var numbers = emptyArray<Int>()
-    var oldNumber = n
-    while (oldNumber > 10) {
-        numbers += oldNumber % 10
-        oldNumber = oldNumber.div(10)
-        if (!numbers.contains(oldNumber % 10)) return true
+    var doubleN = n.toDouble()
+    val currentNumber = n % 10
+    while (doubleN > 1) {
+        if (doubleN.toInt() % 10 != currentNumber) return true
+        doubleN = (doubleN / 10) - (doubleN % 10 / 10)
     }
     return false
 }
@@ -249,7 +235,21 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var oldNumber = 0.0
+    var newNumber = x
+    var countPow = 3
+    while (abs(oldNumber - newNumber) > eps) {
+        oldNumber = newNumber
+        newNumber -= (x.pow(countPow) / factorial(countPow))
+        countPow += 2
+        newNumber += (x.pow(countPow) / factorial(countPow))
+        println(newNumber)
+        println(oldNumber)
+        countPow += 2
+    }
+    return newNumber
+}
 
 /**
  * Средняя (4 балла)
@@ -260,7 +260,19 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var oldNumber = 0.0
+    var newNumber = 1.0
+    var countPow = 2
+    while (abs(newNumber - oldNumber) > eps) {
+        oldNumber = newNumber
+        newNumber -= (x.pow(countPow) / factorial(countPow))
+        countPow += 2
+        newNumber += (x.pow(countPow) / factorial(countPow))
+        countPow += 2
+    }
+    return newNumber
+}
 
 /**
  * Сложная (4 балла)

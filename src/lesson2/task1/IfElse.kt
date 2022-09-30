@@ -86,9 +86,9 @@ fun timeForHalfWay(
 ): Double {
     var halfS = (v1 * t1 + v2 * t2 + v3 * t3) / 2
     return when {
-        (v1 * t1) >= halfS -> halfS / (v1 * t1) * t1
-        (v1 * t1 + v2 * t2) >= halfS -> (halfS - v1 * t1) / (v2 * t2) * t2 + t1
-        else -> (halfS - v1 * t1 - v2 * t2) / (v3 * t3) * t3 + t2 + t1
+        (v1 * t1) >= halfS -> halfS / v1
+        (v1 * t1 + v2 * t2) >= halfS -> (halfS - v1 * t1) / v2 + t1
+        else -> (halfS - v1 * t1 - v2 * t2) / v3 + t2 + t1
     }
 }
 
@@ -106,9 +106,9 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int = when {
-    ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || kingY == rookY2) -> 3
-    (kingX == rookX2) || (kingY == rookY2) -> 2
-    (kingX == rookX1) || (kingY == rookY1) -> 1
+    ((kingX == rookX1) or (kingY == rookY1)) && ((kingX == rookX2) or (kingY == rookY2)) -> 3
+    (kingX == rookX2) or (kingY == rookY2) -> 2
+    (kingX == rookX1) or (kingY == rookY1) -> 1
     else -> 0
 }
 
@@ -129,7 +129,7 @@ fun rookOrBishopThreatens(
 ): Int = when {
     ((kingX == rookX) or (kingY == rookY)) && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
     abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
-    (kingX == rookX) || (kingY == rookY) -> 1
+    (kingX == rookX) or (kingY == rookY) -> 1
     else -> 0
 }
 
@@ -151,7 +151,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         (numbers[0] + numbers[1]) < numbers[2] -> -1
         maxLine > (midLine + minLine) -> 2
         maxLine == (midLine + minLine) -> 1
-        maxLine < (midLine + minLine) -> 0
         else -> 0
     }
 }

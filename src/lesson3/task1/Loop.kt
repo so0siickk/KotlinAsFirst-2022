@@ -154,7 +154,7 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m, n) - 1 until m * n) {
+    for (i in max(m, n) until m * n) {
         if ((i % m == 0) && (i % n == 0)) return i
     }
     return m * n
@@ -239,7 +239,7 @@ fun sin(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = x
     var countPow = 3
-    while (abs(oldNumber - newNumber) > eps) {
+    while (abs(oldNumber - newNumber) > eps / 10) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2
@@ -264,7 +264,7 @@ fun cos(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = 1.0
     var countPow = 2
-    while (abs(newNumber - oldNumber) > eps) {
+    while (abs(newNumber - oldNumber) > eps / 10) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2

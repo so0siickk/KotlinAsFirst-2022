@@ -239,7 +239,7 @@ fun sin(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = x
     var countPow = 3
-    while (abs(oldNumber - newNumber) > eps / 10) {
+    while (abs(oldNumber - newNumber) > eps) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2
@@ -264,7 +264,7 @@ fun cos(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = 1.0
     var countPow = 2
-    while (abs(newNumber - oldNumber) > eps / 10) {
+    while (abs(newNumber - oldNumber) > eps) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2
@@ -285,17 +285,13 @@ fun cos(x: Double, eps: Double): Double {
  */
 fun squareSequenceDigit(n: Int): Int {
     var countNumbers = 0
-    var countSquare = 0
+    var countSquare: Int
     var square = 0
     while (n > countNumbers) {
         square++
         countSquare = sqr(square)
-        while (countSquare > 0) {
-            countNumbers++
-            countSquare = countSquare.div(10)
-        }
+        countNumbers += digitNumber(countSquare)
         if (countNumbers >= n) {
-            countSquare = sqr(square)
             for (i in 1..countNumbers - n) {
                 countSquare = countSquare.div(10)
             }
@@ -314,26 +310,28 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun partNumber(n: Int, number: Int, m: Int): Int {
+    var fibNumber = number
+    for (i in 1..m - n) {
+        fibNumber = fibNumber.div(10)
+    }
+    return fibNumber
+}
+
 fun fibSequenceDigit(n: Int): Int {
-    var fibFirst = 0
+    var fibFirst: Int
     var fibSecond = 0
     var fibThird = 1
-    var fibCount = 0
+    var fibCount: Int
     var count = 0
     while (n > count) {
         fibFirst = fibSecond + fibThird
         fibThird = fibSecond
         fibSecond = fibFirst
         fibCount = fibFirst
-        while (fibCount > 0) {
-            count++
-            fibCount = fibCount.div(10)
-        }
+        count += digitNumber(fibCount)
         if (count >= n) {
-            fibCount = fibFirst
-            for (i in 1..count - n) {
-                fibCount = fibCount.div(10)
-            }
+            fibCount = partNumber(n, fibCount, count)
             return fibCount % 10
         }
     }

@@ -239,7 +239,7 @@ fun sin(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = x
     var countPow = 3
-    while (abs(abs(newNumber) - abs(oldNumber)) > eps) {
+    while (abs(abs(newNumber) - abs(oldNumber)) > eps / 10) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2
@@ -263,14 +263,14 @@ fun cos(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = 1.0
     var countPow = 2
-    while (abs(newNumber - oldNumber) > eps) {
+    while (abs(newNumber - oldNumber) > eps / 10) {
         oldNumber = newNumber
         newNumber -= (x.pow(countPow) / factorial(countPow))
         countPow += 2
         newNumber += (x.pow(countPow) / factorial(countPow))
         countPow += 2
     }
-    return if((newNumber > -2) and (newNumber < 2)) newNumber
+    return if ((newNumber > -2) and (newNumber < 2)) newNumber
     else 1.0
 }
 

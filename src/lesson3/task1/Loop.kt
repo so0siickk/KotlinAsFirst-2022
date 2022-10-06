@@ -75,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number = abs(n).toDouble()
+    var number = abs(n)
     do {
         number /= 10
         count++
@@ -107,7 +107,7 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (i in 2..n / 2 + 1) {
+    for (i in 2..n / 2) {
         if (n % i == 0) return i
     }
     return n
@@ -154,7 +154,8 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in max(m, n) until m * n / 2 + 1 step (max(m, n))) {
+    var checkMax = max(m, n)
+    for (i in checkMax until m * n / 2 + 1 step (checkMax)) {
         if ((i % m == 0) && (i % n == 0)) return i
     }
     return m * n
@@ -217,11 +218,11 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var doubleN = n.toDouble()
     val currentNumber = n % 10
-    while (doubleN > 1) {
-        if (doubleN.toInt() % 10 != currentNumber) return true
-        doubleN = (doubleN / 10) - (doubleN % 10 / 10)
+    var doubleN = n / 10
+    while (doubleN > 0) {
+        if (doubleN % 10 != currentNumber) return true
+        doubleN /= 10
     }
     return false
 }
@@ -239,14 +240,15 @@ fun sin(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = x
     var countPow = 3
-    while (abs(abs(newNumber) - abs(oldNumber)) > eps / 10) {
+    var count = 1
+    while (abs(newNumber - oldNumber) > eps) {
         oldNumber = newNumber
-        newNumber -= (x.pow(countPow) / factorial(countPow))
+        if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
+        else newNumber += (x.pow(countPow) / factorial(countPow))
         countPow += 2
-        newNumber += (x.pow(countPow) / factorial(countPow))
-        countPow += 2
+        count++
     }
-    return if ((newNumber > -2) and (newNumber < 2)) newNumber
+    return if ((newNumber > -2) && (newNumber < 2)) newNumber
     else 0.0
 }
 
@@ -263,14 +265,15 @@ fun cos(x: Double, eps: Double): Double {
     var oldNumber = 0.0
     var newNumber = 1.0
     var countPow = 2
-    while (abs(newNumber - oldNumber) > eps / 10) {
+    var count = 1
+    while (abs(newNumber - oldNumber) > eps) {
         oldNumber = newNumber
-        newNumber -= (x.pow(countPow) / factorial(countPow))
+        if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
+        else newNumber += (x.pow(countPow) / factorial(countPow))
         countPow += 2
-        newNumber += (x.pow(countPow) / factorial(countPow))
-        countPow += 2
+        count++
     }
-    return if ((newNumber > -2) and (newNumber < 2)) newNumber
+    return if ((newNumber > -2) && (newNumber < 2)) newNumber
     else 1.0
 }
 
@@ -283,6 +286,14 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun partNumber(n: Int, number: Int, m: Int): Int {
+    var fibNumber = number
+    for (i in 1..m - n) {
+        fibNumber = fibNumber.div(10)
+    }
+    return fibNumber
+}
+
 fun squareSequenceDigit(n: Int): Int {
     var countNumbers = 0
     var countSquare: Int
@@ -292,9 +303,7 @@ fun squareSequenceDigit(n: Int): Int {
         countSquare = sqr(square)
         countNumbers += digitNumber(countSquare)
         if (countNumbers >= n) {
-            for (i in 1..countNumbers - n) {
-                countSquare = countSquare.div(10)
-            }
+            countSquare = partNumber(n, countSquare, countNumbers)
             return countSquare % 10
         }
     }
@@ -310,13 +319,6 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun partNumber(n: Int, number: Int, m: Int): Int {
-    var fibNumber = number
-    for (i in 1..m - n) {
-        fibNumber = fibNumber.div(10)
-    }
-    return fibNumber
-}
 
 fun fibSequenceDigit(n: Int): Int {
     var fibFirst: Int

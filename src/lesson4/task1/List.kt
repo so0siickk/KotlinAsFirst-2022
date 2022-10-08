@@ -278,7 +278,7 @@ fun convertToString(n: Int, base: Int): String {
     var letters = "abcdefghijklmnopqrstuvwxyz"
     var answerString = ""
     for (element in list) {
-        if (element > 9) answerString += letters[element - 10] else answerString += element
+        if (element > 10) answerString += letters[element - 10] else answerString += element
     }
     return answerString
 }
@@ -355,7 +355,7 @@ fun roman(n: Int): String {
 fun russian(n: Int): String {
     var answer = ""
     var number = n
-    var count = 1
+    var count = 0
     var thousand = if (n > 1000) n / 1000 else 0
     var glossary = mapOf(
         1000 to "тысяча",
@@ -403,6 +403,7 @@ fun russian(n: Int): String {
                     answer += value.repeat(number / key)
                     number -= key * (number / key)
                     answer += " "
+                    count = 1
                 }
             }
             if (number < 10000) {

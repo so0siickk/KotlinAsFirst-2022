@@ -258,7 +258,10 @@ fun convert(n: Int, base: Int): List<Int> {
         answer.add(number % base)
         number /= base
     }
-    if (number == base) answer.add(base - 1) else answer.add(number)
+    if (number == base) {
+        answer.add(0)
+        answer.add(1)
+    } else answer.add(number)
     return answer.reversed()
 }
 
@@ -278,7 +281,7 @@ fun convertToString(n: Int, base: Int): String {
     var letters = "abcdefghijklmnopqrstuvwxyz"
     var answerString = ""
     for (element in list) {
-        if (element > 10) answerString += letters[element - 10] else answerString += element
+        if (element > 9) answerString += letters[element - 10] else answerString += element
     }
     return answerString
 }

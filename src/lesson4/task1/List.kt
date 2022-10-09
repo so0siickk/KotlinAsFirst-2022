@@ -358,7 +358,8 @@ fun russian(n: Int): String {
     var count = 0
     var thousand = if (n > 1000) n / 1000 else 0
     var glossary = mapOf(
-        1000 to "одна",
+        2000 to "две тысячи",
+        1000 to "одна тысяча",
         900 to "девятьсот",
         800 to "восемьсот",
         700 to "семьсот",
@@ -398,29 +399,37 @@ fun russian(n: Int): String {
     )
     while (number > 0) {
         for ((key, value) in glossary) {
-            if (number >= 10000) {
+            if (number > 3000) {
                 if (number >= key * 1000) {
-                    answer += value.repeat(number / key)
-                    number -= key * (number / key)
+                    answer += value
+                    number -= key * (number / (key * 1000) * 1000)
                     answer += " "
                     count = 1
+                    break
                 }
             }
-            if (number < 10000) {
-                if (count == 1) {
+            if (number < 3001) {
+                if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
                     answer += when {
-                        thousand > 4 -> "тысяч"
-                        thousand % 10 > 1 && thousand < 5 -> "тысячм"
-                        else -> "тысяча"
+                        (thousand % 10 > 4) || (thousand >= 100) -> "тысяч"
+                        else -> "тысячи"
                     }
-
+                    answer += " "
                     count = 0
                 }
                 if (number >= key) {
-                    answer += value.repeat(number / key)
+                    answer += value
                     number -= key * (number / key)
                     if (number != 0) answer += " "
                 }
+            }
+        }
+    }
+    if (("тысяч" !in answer) or ("тысячи" !in answer)) {
+        if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
+            answer += when {
+                (thousand % 10 > 4) || (thousand >= 100) -> "тысяч"
+                else -> "тысячи"
             }
         }
     }

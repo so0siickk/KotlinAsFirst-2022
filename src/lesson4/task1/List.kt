@@ -258,7 +258,7 @@ fun convert(n: Int, base: Int): List<Int> {
         answer.add(number % base)
         number /= base
     }
-    answer.add(number)
+    if (number == base) answer.add(base - 1) else answer.add(number)
     return answer.reversed()
 }
 
@@ -358,7 +358,7 @@ fun russian(n: Int): String {
     var count = 0
     var thousand = if (n > 1000) n / 1000 else 0
     var glossary = mapOf(
-        1000 to "тысяча",
+        1000 to "одна",
         900 to "девятьсот",
         800 to "восемьсот",
         700 to "семьсот",

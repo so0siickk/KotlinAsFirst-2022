@@ -411,7 +411,7 @@ fun russian(n: Int): String {
             if (number < 3001) {
                 if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
                     answer += when {
-                        (thousand % 10 > 4) || (thousand % 10 == 0) -> "тысяч"
+                        ((thousand % 100 > 4) && (thousand % 100 < 20)) || (thousand % 10 == 0) -> "тысяч"
                         else -> "тысячи"
                     }
                     answer += " "

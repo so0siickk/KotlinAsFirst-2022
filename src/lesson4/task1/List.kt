@@ -402,17 +402,23 @@ fun russian(n: Int): String {
     )
     while (number > 0) {
         for ((key, value) in glossary) {
-            if (number > 3000) {
+            if (number > 1000) {
                 if (number >= key * 1000) {
-                    answer += value
+                    if ((key != 1) && (key != 2) && (key != 11) && (key != 12)) answer += value
+                    else when (key) {
+                        1 -> answer += "одна тысяча"
+                        2 -> answer += "две тысячи"
+                        11 -> answer += "одиннадцать тысяч"
+                        12 -> answer += "двенадцать тысяч"
+                    }
                     number -= key * (number / (key * 1000) * 1000)
                     answer += " "
                     count = 1
                     break
                 }
             }
-            if (number < 3001) {
-                if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
+            if (number < 1001) {
+                if ((count == 1) && ((n / 1000 % 10) != 1) && ((n / 1000 % 10) != 2)) {
                     answer += when {
                         ((thousand % 100 > 4) && (thousand % 100 < 20)) || (thousand % 10 == 0) || (thousand % 10 > 4) -> "тысяч"
                         else -> "тысячи"

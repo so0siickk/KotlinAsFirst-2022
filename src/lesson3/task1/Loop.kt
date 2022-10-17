@@ -204,10 +204,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    return if (n <= 2147447412) (n == revert(n))
-    else false
-}
+fun isPalindrome(n: Int): Boolean = if (n <= 2147447412) (n == revert(n)) else false
 
 /**
  * Средняя (3 балла)
@@ -241,15 +238,14 @@ fun sin(x: Double, eps: Double): Double {
     var newNumber = x
     var countPow = 3
     var count = 1
-    while (abs(newNumber - oldNumber) > eps) {
+    while (sqr(newNumber - oldNumber) >= sqr(eps)) {
         oldNumber = newNumber
         if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
         else newNumber += (x.pow(countPow) / factorial(countPow))
         countPow += 2
         count++
     }
-    return if ((newNumber > -2) && (newNumber < 2)) newNumber
-    else 0.0
+    return newNumber
 }
 
 /**
@@ -266,15 +262,14 @@ fun cos(x: Double, eps: Double): Double {
     var newNumber = 1.0
     var countPow = 2
     var count = 1
-    while (abs(newNumber - oldNumber) > eps) {
+    while (sqr(newNumber - oldNumber) > sqr(eps)) {
         oldNumber = newNumber
         if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
         else newNumber += (x.pow(countPow) / factorial(countPow))
         countPow += 2
         count++
     }
-    return if ((newNumber > -2) && (newNumber < 2)) newNumber
-    else 1.0
+    return newNumber
 }
 
 /**

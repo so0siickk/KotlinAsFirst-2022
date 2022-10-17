@@ -397,8 +397,7 @@ fun russian(n: Int): String {
         5 to "пять",
         4 to "четыре",
         3 to "три",
-        2 to "два",
-        1 to "один"
+        2 to "два", 1 to "один"
     )
     while (number > 0) {
         for ((key, value) in glossary) {

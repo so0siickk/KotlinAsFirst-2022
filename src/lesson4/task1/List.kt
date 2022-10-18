@@ -147,13 +147,9 @@ fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var midValue = mean(list)
-    var count = 0
-    if (list.isNotEmpty()) {
-        for (element in list) {
-            list[count] = element - midValue
-            count++
-        }
+    val midValue = mean(list)
+    for ((count, element) in list.withIndex()) {
+        list[count] = element - midValue
     }
     return list
 }
@@ -202,7 +198,7 @@ fun polynom(p: List<Int>, x: Int): Int {
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
     var total = if (list.isNotEmpty()) list[0] else 0
     var lastTotal = total
-    if (list.count() > 1) for (i in 1 until list.count()) {
+    for (i in 1 until list.count()) {
         total += list[i]
         list[i] += lastTotal
         lastTotal = total
@@ -218,7 +214,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var result = mutableListOf<Int>()
+    val result = mutableListOf<Int>()
     var count = 1
     var number = n
     while (count == 1) {
@@ -252,7 +248,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var answer = mutableListOf<Int>()
+    val answer = mutableListOf<Int>()
     var number = n
     while (number > base) {
         answer.add(number % base)
@@ -278,12 +274,11 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
-    var letters = "abcdefghijklmnopqrstuvwxyz"
-    var answerString = ""
+    val answerString = StringBuilder()
     for (element in list) {
-        if (element > 9) answerString += letters[element - 10] else answerString += element
+        if (element > 9) answerString.append((element + 87).toChar()) else answerString.append(element)
     }
-    return answerString
+    return answerString.toString()
 }
 
 /**
@@ -316,8 +311,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var list = mutableListOf<String>()
-    var letters = "abcdefghijklmnopqrstuvwxyz"
+    val list = mutableListOf<String>()
+    val letters = "abcdefghijklmnopqrstuvwxyz"
     for (i in str) list.add(i.toString())
     for (i in 0 until list.count()) if (list[i] in letters) list[i] = (letters.indexOf(list[i]) + 10).toString()
     return decimal(list.map { it.toInt() }, base)
@@ -332,20 +327,20 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var answer = ""
+    val answer = StringBuilder()
     var number = n
-    var glossary = mapOf(
+    val glossary = mapOf(
         1000 to "M", 900 to "CM", 500 to "D", 400 to "CD", 100 to "C", 90 to "XC", 50 to "L",
         40 to "XL", 10 to "X", 9 to "IX", 5 to "V", 4 to "IV", 1 to "I"
     )
     while (number > 0) {
         for ((key, value) in glossary)
             if (number >= key) {
-                answer += value.repeat(number / key)
+                answer.append(value.repeat(number / key))
                 number -= key * (number / key)
             }
     }
-    return answer
+    return answer.toString()
 }
 
 /**
@@ -356,11 +351,11 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var answer = ""
+    val answer = StringBuilder()
     var number = n
     var count = 0
-    var thousand = if (n > 1000) n / 1000 else 0
-    var glossary = mapOf(
+    val thousand = if (n > 1000) n / 1000 else 0
+    val glossary = mapOf(
         2000 to "две тысячи",
         1000 to "одна тысяча",
         900 to "девятьсот",
@@ -403,43 +398,49 @@ fun russian(n: Int): String {
         for ((key, value) in glossary) {
             if (number > 1000) {
                 if (number >= key * 1000) {
-                    if ((key != 1) && (key != 2) && (key != 11) && (key != 12)) answer += value
+                    if ((key != 1) && (key != 2) && (key != 11) && (key != 12)) answer.append(value)
                     else when (key) {
-                        1 -> answer += "одна тысяча"
-                        2 -> answer += "две тысячи"
-                        11 -> answer += "одиннадцать тысяч"
-                        12 -> answer += "двенадцать тысяч"
+                        1 -> answer.append("одна тысяча")
+                        2 -> answer.append("две тысячи")
+                        11 -> answer.append("одиннадцать тысяч")
+                        12 -> answer.append("двенадцать тысяч")
                     }
                     number -= key * (number / (key * 1000) * 1000)
-                    answer += " "
+                    answer.append(" ")
                     count = 1
                     break
                 }
             }
             if (number < 1001) {
                 if ((count == 1) && ((n / 1000 % 10) != 1) && ((n / 1000 % 10) != 2)) {
-                    answer += when {
-                        ((thousand % 100 > 4) && (thousand % 100 < 20)) || (thousand % 10 == 0) || (thousand % 10 > 4) -> "тысяч"
-                        else -> "тысячи"
-                    }
-                    answer += " "
+                    answer.append(
+                        when {
+                            ((thousand % 100 > 4) && (thousand % 100 < 20)) ||
+                                    (thousand % 10 == 0) || (thousand % 10 > 4) -> "тысяч"
+
+                            else -> "тысячи"
+                        }
+                    )
+                    answer.append(" ")
                     count = 0
                 }
                 if (number >= key) {
-                    answer += value
+                    answer.append(value)
                     number -= key * (number / key)
-                    if (number != 0) answer += " "
+                    if (number != 0) answer.append(" ")
                 }
             }
         }
     }
-    if (("тысяч" !in answer) or ("тысячи" !in answer)) {
+    if (("тысяч" !in answer) || ("тысячи" !in answer)) {
         if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
-            answer += when {
-                (thousand % 10 > 4) || (thousand >= 100) -> "тысяч"
-                else -> "тысячи"
-            }
+            answer.append(
+                when {
+                    (thousand % 10 > 4) || (thousand >= 100) -> "тысяч"
+                    else -> "тысячи"
+                }
+            )
         }
     }
-    return answer
+    return answer.toString()
 }

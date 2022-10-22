@@ -267,8 +267,8 @@ fun cos(x: Double, eps: Double): Double {
     var count = 1
     while (sqr(newNumber - oldNumber) > sqr(eps)) {
         oldNumber = newNumber
-        if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
-        else newNumber += (x.pow(countPow) / factorial(countPow))
+        if (count % 2 == 1) newNumber -= ((x % (2 * PI)).pow(countPow) / factorial(countPow))
+        else newNumber += ((x % (2 * PI)).pow(countPow) / factorial(countPow))
         countPow += 2
         count++
     }

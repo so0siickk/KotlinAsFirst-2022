@@ -142,11 +142,12 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     var count = 0
     for ((keyF, valueF) in a) {
         for ((keyS, valueS) in b) {
-            if ((keyF == keyS) && (valueF == valueS)) a.remove("a")
+            if ((keyF == keyS) and (valueF == valueS)) a.remove("a")
         }
         count++
         if (a.count() == count) break
     }
+    println(a)
 }
 
 /**

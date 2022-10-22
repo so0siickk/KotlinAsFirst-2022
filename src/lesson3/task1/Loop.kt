@@ -235,13 +235,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun sin(x: Double, eps: Double): Double {
     var oldNumber = 0.0
-    var newNumber = x
+    var newNumber = x % (2 * PI)
     var countPow = 3
     var count = 1
-    while (abs(newNumber - oldNumber) >= eps) {
+    while (abs(newNumber - oldNumber) > eps) {
         oldNumber = newNumber
-        if (count % 2 == 1) newNumber -= (x.pow(countPow) / factorial(countPow))
-        else newNumber += (x.pow(countPow) / factorial(countPow))
+        if (count % 2 == 1) {
+            newNumber -= ((x % (2 * PI)).pow(countPow) / factorial(countPow))
+        } else {
+            newNumber += ((x % (2 * PI)).pow(countPow) / factorial(countPow))
+        }
         countPow += 2
         count++
     }
@@ -259,7 +262,7 @@ fun sin(x: Double, eps: Double): Double {
  */
 fun cos(x: Double, eps: Double): Double {
     var oldNumber = 0.0
-    var newNumber = x
+    var newNumber = 1.0
     var countPow = 2
     var count = 1
     while (sqr(newNumber - oldNumber) > sqr(eps)) {

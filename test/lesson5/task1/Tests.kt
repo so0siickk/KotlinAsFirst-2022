@@ -144,12 +144,12 @@ class Tests {
     @Tag("2")
     fun whoAreInBoth() {
         assertEquals(
-            emptyList<String>(),
-            whoAreInBoth(emptyList(), emptyList())
-        )
-        assertEquals(
             listOf("Marat"),
             whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Marat", "Kirill"))
+        )
+        assertEquals(
+            emptyList<String>(),
+            whoAreInBoth(emptyList(), emptyList())
         )
         assertEquals(
             emptyList<String>(),
@@ -160,6 +160,13 @@ class Tests {
     @Test
     @Tag("3")
     fun mergePhoneBooks() {
+        assertEquals(
+            mapOf("Emergency" to "112, 911", "Police" to "02"),
+            mergePhoneBooks(
+                mapOf("Emergency" to "112"),
+                mapOf("Emergency" to "911", "Police" to "02")
+            )
+        )
         assertEquals(
             mapOf("Emergency" to "112"),
             mergePhoneBooks(
@@ -172,13 +179,6 @@ class Tests {
             mergePhoneBooks(
                 mapOf("Emergency" to "112"),
                 mapOf("Emergency" to "112", "Police" to "02")
-            )
-        )
-        assertEquals(
-            mapOf("Emergency" to "112, 911", "Police" to "02"),
-            mergePhoneBooks(
-                mapOf("Emergency" to "112"),
-                mapOf("Emergency" to "911", "Police" to "02")
             )
         )
         assertEquals(

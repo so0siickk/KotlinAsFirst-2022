@@ -179,12 +179,22 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val answer = mutableMapOf<String, String>()
+    var count = 0
     for ((key, value) in mapA) {
         answer[key] = value
     }
     for ((key, value) in mapB) {
-        if (!answer.contains(key)) answer[key] = value
-        else if ((!answer[key]!!.contains(value)) || (value == "")) answer[key] += ", $value"
+        if (!answer.contains(key)) {
+            answer[key] = value
+            count = 1
+        } else for ((keyAnswer, _) in answer) {
+            if (answer[keyAnswer] == value) {
+                count = 1
+                break
+            }
+        }
+        if (count == 0) answer[key] += ", $value"
+        count = 0
     }
     return answer
 }

@@ -161,6 +161,13 @@ class Tests {
     @Tag("3")
     fun mergePhoneBooks() {
         assertEquals(
+            mapOf("Emergency" to "112, ", "Fire department" to "01", "Police" to "02"),
+            mergePhoneBooks(
+                mapOf("Emergency" to "112", "Fire department" to "01"),
+                mapOf("Emergency" to "", "Police" to "02")
+            )
+        )
+        assertEquals(
             mapOf("Emergency" to "112, 911", "Police" to "02"),
             mergePhoneBooks(
                 mapOf("Emergency" to "112"),
@@ -179,13 +186,6 @@ class Tests {
             mergePhoneBooks(
                 mapOf("Emergency" to "112"),
                 mapOf("Emergency" to "112", "Police" to "02")
-            )
-        )
-        assertEquals(
-            mapOf("Emergency" to "112, 911", "Fire department" to "01", "Police" to "02"),
-            mergePhoneBooks(
-                mapOf("Emergency" to "112", "Fire department" to "01"),
-                mapOf("Emergency" to "911", "Police" to "02")
             )
         )
     }

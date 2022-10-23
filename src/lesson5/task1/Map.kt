@@ -184,7 +184,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     }
     for ((key, value) in mapB) {
         if (!answer.contains(key)) answer[key] = value
-        else if ((!answer[key]!!.contains(value)) || key == "") answer[key] += ", $value"
+        else if ((!answer[key]!!.contains(value)) || (value == "")) answer[key] += ", $value"
     }
     return answer
 }
@@ -205,7 +205,8 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     var lastKey = String()
     for ((key, value) in stockPrices) {
         if (!answer.keys.contains(key)) {
-            if (answer.isNotEmpty() && (lastKey != "")) {
+            println(answer)
+            if (answer.isNotEmpty()) {
                 answer[lastKey] = answer[lastKey]!! / count
             }
             count = 1

@@ -105,7 +105,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt((
  * Пользователь задает целое число, больше или равно 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = if ((number / 100) < 10) (number / 100) else ((number / 100) % 10)
+fun thirdDigit(number: Int): Int = ((number / 100) % 10)
 
 
 /**

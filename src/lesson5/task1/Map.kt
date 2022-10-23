@@ -193,7 +193,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
                 break
             }
         }
-        if (count == 0) answer[key] += ", $value"
+        if ((count == 0) || (value == "")) {
+            answer[key] += ", $value"
+        }
         count = 0
     }
     return answer

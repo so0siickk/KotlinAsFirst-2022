@@ -215,15 +215,17 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     val result = mutableListOf<Int>()
-    var count = 1
+    var count = true
     var number = n
-    while (count == 1) {
-        count = 0
-        for (i in 2..number) {
+    var lastDiv = 2
+    while (count) {
+        count = false
+        for (i in lastDiv..number) {
             if (number % i == 0) {
                 result.add(i)
-                count = 1
+                count = true
                 number /= i
+                lastDiv = i
                 break
             }
         }
@@ -275,8 +277,9 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
     val answerString = StringBuilder()
+    val constLetter = 87
     for (element in list) {
-        if (element > 9) answerString.append((element + 87).toChar()) else answerString.append(element)
+        if (element > 9) answerString.append((element + constLetter).toChar()) else answerString.append(element)
     }
     return answerString.toString()
 }
@@ -333,13 +336,11 @@ fun roman(n: Int): String {
         1000 to "M", 900 to "CM", 500 to "D", 400 to "CD", 100 to "C", 90 to "XC", 50 to "L",
         40 to "XL", 10 to "X", 9 to "IX", 5 to "V", 4 to "IV", 1 to "I"
     )
-    while (number > 0) {
-        for ((key, value) in glossary)
-            if (number >= key) {
-                answer.append(value.repeat(number / key))
-                number -= key * (number / key)
-            }
-    }
+    for ((key, value) in glossary)
+        if (number >= key) {
+            answer.append(value.repeat(number / key))
+            number -= key * (number / key)
+        }
     return answer.toString()
 }
 
@@ -436,7 +437,7 @@ fun russian(n: Int): String {
         if ((count == 1) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
             answer.append(
                 when {
-                    (thousand % 10 > 4) || (thousand >= 100) -> "тысяч"
+                    (thousand % 10 > 4) || (thousand >= 100) || (number == 0) -> "тысяч"
                     else -> "тысячи"
                 }
             )

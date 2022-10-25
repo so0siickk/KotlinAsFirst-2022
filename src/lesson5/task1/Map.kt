@@ -242,7 +242,24 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var answer: String? = null
+    var lowestPrice: Double? = null
+    for ((name, pairData) in stuff) {
+        if (pairData.first == kind) {
+            if (lowestPrice != null) {
+                if (lowestPrice > pairData.second) {
+                    lowestPrice = pairData.second
+                    answer = name
+                }
+            } else {
+                lowestPrice = pairData.second
+                answer = name
+            }
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -253,7 +270,16 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    var answer = true
+    for (i in word) {
+        if (!chars.contains(i)) {
+            answer = false
+            break
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя (4 балла)
@@ -267,7 +293,19 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val removeKeys = mutableListOf<String>()
+    val answer = mutableMapOf<String, Int>()
+    for (i in list) {
+        if (answer.keys.contains(i)) answer[i] = answer[i]!! + 1
+        else answer[i] = 1
+    }
+    for ((key, value) in answer) {
+        if (value == 1) removeKeys.add(key)
+    }
+    for (key in removeKeys) answer.remove(key)
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -281,7 +319,20 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var answer = false
+
+    for (numberF in words.indices) {
+        for (numberS in numberF until words.size) {
+            if (words[numberF] == words[numberS].reversed()) {
+                answer = true
+                break
+            }
+        }
+        if (answer) break
+    }
+    return answer
+}
 
 /**
  * Сложная (5 баллов)
@@ -317,7 +368,24 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *          "GoodGnome" to setOf()
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    val answer = mutableMapOf<String, MutableSet<String>>()
+    for ((name, namesFriends) in friends) {
+        if (answer.keys.contains(name)) answer[name]!!.addAll(namesFriends)
+        else {
+            answer[name] = namesFriends as MutableSet<String>
+            for (nameFriend in namesFriends) {
+                if (friends.keys.contains(nameFriend)) {
+                    println(answer[name])
+//                  как добавлять элемент в начало seta
+                    answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as MutableSet<String>
+                } else answer[nameFriend] = setOf("") as MutableSet<String>
+            }
+        }
+    }
+    return answer
+}
 
 /**
  * Сложная (6 баллов)
@@ -336,7 +404,21 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var answer = (-1 to -1)
+    var sumOfTwo = 0
+    for (numberOne in list.size - 1 downTo 1) {
+        sumOfTwo = list[numberOne]
+        for (numberTwo in 0 until numberOne) {
+            if ((sumOfTwo + list[numberTwo]) == number){
+                answer = numberTwo to numberOne
+                break
+            }
+        }
+        if (answer != (-1 to -1)) break
+    }
+    return answer
+}
 
 /**
  * Очень сложная (8 баллов)

@@ -458,7 +458,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
         for ((nameSecond, dataSecond) in startData) {
             if (nameFirst == nameSecond) break
-            if ((weight + dataSecond.first) <= capacity) {
+            if ((weight + dataSecond.first)<= capacity){
                 weight += dataSecond.first
                 price += dataSecond.second
                 answer += nameSecond
@@ -466,6 +466,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
         if ((price > topPrice) && (weight <= capacity)) {
             topPrice = price
+            topAnswer.clear()
             topAnswer.addAll(answer)
         }
         weight = 0

@@ -450,30 +450,34 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     val answer = mutableSetOf<String>()
     val topAnswer = mutableSetOf<String>()
     var weight = 0
+    var count: Int
     for (numberOne in 0 until treasures.count()) {
+        count = 0
         if ((weight + listTreasures[numberOne].second.first) <= capacity) {
             weight += listTreasures[numberOne].second.first
             price += listTreasures[numberOne].second.second
             answer += listTreasures[numberOne].first
         }
-        for (numberTwo in numberOne until treasures.count()) {
-            if (((weight + listTreasures[numberTwo].second.first) <= capacity) &&
-                (listTreasures[numberOne].first != listTreasures[numberTwo].first)
-            ) {
-                weight += listTreasures[numberTwo].second.first
-                price += listTreasures[numberTwo].second.second
-                answer += listTreasures[numberTwo].first
+        while (count != treasures.count() - 1) {
+            for (numberTwo in count until treasures.count()) {
+                if (((weight + listTreasures[numberTwo].second.first) <= capacity) &&
+                    (listTreasures[numberOne].first != listTreasures[numberTwo].first)
+                ) {
+                    weight += listTreasures[numberTwo].second.first
+                    price += listTreasures[numberTwo].second.second
+                    answer += listTreasures[numberTwo].first
+                }
             }
+            if ((price > topPrice) && (weight <= capacity)) {
+                topPrice = price
+                topAnswer.clear()
+                topAnswer.addAll(answer)
+            }
+            weight = 0
+            price = 0
+            answer.clear()
+            count++
         }
-        println(answer)
-        if ((price > topPrice) && (weight <= capacity)) {
-            topPrice = price
-            topAnswer.clear()
-            topAnswer.addAll(answer)
-        }
-        weight = 0
-        price = 0
-        answer.clear()
     }
 //    for ((nameFirst, dataFirst) in treasures) {
 //        if ((weight + dataFirst.first) <= capacity) {
@@ -506,5 +510,5 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
 //            answer += name
 //        }
 //    }
-    return topAnswer.toList().sorted().toSet()
+    return topAnswer
 }

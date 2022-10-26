@@ -454,9 +454,9 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     for (numberOne in 0 until treasures.count()) {
         count = 0
         if ((weight + listTreasures[numberOne].second.first) <= capacity) {
-            weight += listTreasures[numberOne].second.first
-            price += listTreasures[numberOne].second.second
-            answer += listTreasures[numberOne].first
+            weight = listTreasures[numberOne].second.first
+            price = listTreasures[numberOne].second.second
+            answer += (listTreasures[numberOne].first)
         }
         while (count != treasures.count() - 1) {
             for (numberTwo in count until treasures.count()) {
@@ -467,17 +467,19 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                     price += listTreasures[numberTwo].second.second
                     answer += listTreasures[numberTwo].first
                 }
+                if ((price > topPrice) && (weight <= capacity)) {
+                    topPrice = price
+                    topAnswer.clear()
+                    topAnswer.addAll(answer)
+                }
+                answer.clear()
+                answer += (listTreasures[numberOne].first)
             }
-            if ((price > topPrice) && (weight <= capacity)) {
-                topPrice = price
-                topAnswer.clear()
-                topAnswer.addAll(answer)
-            }
-            weight = 0
-            price = 0
-            answer.clear()
+            weight = listTreasures[numberOne].second.first
+            price = listTreasures[numberOne].second.second
             count++
         }
+        answer.clear()
     }
 //    for ((nameFirst, dataFirst) in treasures) {
 //        if ((weight + dataFirst.first) <= capacity) {

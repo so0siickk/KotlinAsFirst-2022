@@ -458,9 +458,11 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
         for ((nameSecond, dataSecond) in startData) {
             if (nameFirst == nameSecond) break
-            weight += dataSecond.first
-            price += dataSecond.second
-            answer += nameSecond
+            if ((weight + dataSecond.first) <= capacity) {
+                weight += dataSecond.first
+                price += dataSecond.second
+                answer += nameSecond
+            }
         }
         if ((price > topPrice) && (weight <= capacity)) {
             topPrice = price

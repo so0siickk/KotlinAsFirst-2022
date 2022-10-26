@@ -2,7 +2,9 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.defaultCopy
 import java.lang.StringBuilder
+import kotlin.reflect.jvm.internal.impl.descriptors.deserialization.PlatformDependentDeclarationFilter.All
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -446,24 +448,27 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var price = 0
     var topPrice = 0
     val answer = mutableSetOf<String>()
-    var topAnswer = mutableSetOf<String>()
+    val topAnswer = mutableSetOf<String>()
     var weight = 0
     for ((nameFirst, dataFirst) in startData) {
-        if ((weight + dataFirst.first) < capacity) {
+        if ((weight + dataFirst.first) <= capacity) {
             weight += dataFirst.first
             price += dataFirst.second
             answer += nameFirst
         }
         for ((nameSecond, dataSecond) in startData) {
-            if ((weight + dataSecond.first) >= capacity) break
+            if (nameFirst != nameSecond) break
             weight += dataSecond.first
             price += dataSecond.second
             answer += nameSecond
         }
-        if (price > topPrice) {
+        if ((price > topPrice) && (weight <= capacity)) {
             topPrice = price
-            topAnswer = answer
+            topAnswer.addAll(answer)
         }
+        weight = 0
+        price = 0
+        answer.clear()
     }
 //    for ((name, data) in treasures) {
 //        if ((weight + data.first) < capacity) {

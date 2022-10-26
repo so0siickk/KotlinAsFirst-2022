@@ -410,7 +410,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     for (numberOne in list.size - 1 downTo 1) {
         sumOfTwo = list[numberOne]
         for (numberTwo in 0 until numberOne) {
-            if ((sumOfTwo + list[numberTwo]) == number){
+            if ((sumOfTwo + list[numberTwo]) == number) {
                 answer = numberTwo to numberOne
                 break
             }
@@ -441,4 +441,35 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val startData = treasures.toList().reversed()
+    var price = 0
+    var topPrice = 0
+    val answer = mutableSetOf<String>()
+    var topAnswer = mutableSetOf<String>()
+    var weight = 0
+    for ((nameFirst, dataFirst) in startData) {
+        if ((weight + dataFirst.first) < capacity) {
+            weight += dataFirst.first
+            price += dataFirst.second
+            answer += nameFirst
+        }
+        for ((nameSecond, dataSecond) in startData) {
+            if ((weight + dataSecond.first) > capacity) break
+            weight += dataSecond.first
+            price += dataSecond.second
+            answer += nameSecond
+        }
+        if (price > topPrice) {
+            topPrice = price
+            topAnswer = answer
+        }
+    }
+//    for ((name, data) in treasures) {
+//        if ((weight + data.first) < capacity) {
+//            weight += data.first
+//            answer += name
+//        }
+//    }
+    return topAnswer
+}

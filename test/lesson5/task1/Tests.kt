@@ -322,9 +322,9 @@ class Tests {
     @Tag("8")
     fun bagPacking() {
         assertEquals(
-            setOf("0"),
+            setOf("0, 4"),
             bagPacking(
-                mapOf("0" to (1 to 2), "1" to (2 to 1)),
+                mapOf("0" to (1 to 2), "1" to (1 to 1), "2" to (1 to 1), "3" to (1 to 1), "4" to (1 to 2)),
                 2
             )
         )

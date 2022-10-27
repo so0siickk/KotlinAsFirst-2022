@@ -175,7 +175,49 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    var glossary = mapOf(
+        "M" to 1000,
+        "CM" to 900,
+        "D" to 500,
+        "CD" to 400,
+        "C" to 100,
+        "XC" to 90,
+        "L" to 50,
+        "XL" to 40,
+        "X" to 10,
+        "IX" to 9,
+        "V" to 5,
+        "IV" to 4,
+        "I" to 1
+    )
+    var newRoman = roman
+    var answer = 0
+    var condition: Boolean
+    var timeString: String
+    var newNumber = 0
+    for (number in 0 until newRoman.count()) {
+        condition = true
+        if (glossary.containsKey(newRoman[newNumber].toString())) {
+            timeString = newRoman[newNumber].toString()
+            if (newNumber + 1 < newRoman.count()) {
+                if (glossary.containsKey(timeString + newRoman[newNumber + 1])) {
+                    timeString += newRoman[newNumber + 1]
+                    answer += glossary[timeString]!!.toInt()
+                    condition = false
+                    newNumber++
+                }
+            }
+            if (condition) {
+                answer += glossary[timeString]!!.toInt()
+            }
+        }
+        newNumber++
+        if (newNumber == newRoman.count()) break
+    }
+    if (answer == 0) return -1
+    return answer
+}
 
 /**
  * Очень сложная (7 баллов)

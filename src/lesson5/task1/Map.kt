@@ -453,7 +453,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             weight += listTreasures[numberOne].second.first
             answer += listTreasures[numberOne].first
         } else {
-            for (answersName in answer.reversed()) {
+            for (answersName in answer) {
                 if (((weight + listTreasures[numberOne].second.first - treasures[answersName]!!.first) <= capacity)
                     && (listTreasures[numberOne].second.second > treasures[answersName]!!.second)
                 ) {

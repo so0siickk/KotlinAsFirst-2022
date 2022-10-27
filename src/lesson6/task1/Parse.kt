@@ -176,7 +176,7 @@ fun mostExpensive(description: String): String = TODO()
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int {
-    var glossary = mapOf(
+    val glossary = mapOf(
         "M" to 1000,
         "CM" to 900,
         "D" to 500,
@@ -191,18 +191,18 @@ fun fromRoman(roman: String): Int {
         "IV" to 4,
         "I" to 1
     )
-    var newRoman = roman
     var answer = 0
     var condition: Boolean
     var timeString: String
     var newNumber = 0
-    for (number in 0 until newRoman.count()) {
+    for (number in 0 until roman.count()) {
+        if (!glossary.containsKey(roman[newNumber].toString())) return -1
         condition = true
-        if (glossary.containsKey(newRoman[newNumber].toString())) {
-            timeString = newRoman[newNumber].toString()
-            if (newNumber + 1 < newRoman.count()) {
-                if (glossary.containsKey(timeString + newRoman[newNumber + 1])) {
-                    timeString += newRoman[newNumber + 1]
+        if (glossary.containsKey(roman[newNumber].toString())) {
+            timeString = roman[newNumber].toString()
+            if (newNumber + 1 < roman.count()) {
+                if (glossary.containsKey(timeString + roman[newNumber + 1])) {
+                    timeString += roman[newNumber + 1]
                     answer += glossary[timeString]!!.toInt()
                     condition = false
                     newNumber++
@@ -213,9 +213,8 @@ fun fromRoman(roman: String): Int {
             }
         }
         newNumber++
-        if (newNumber == newRoman.count()) break
+        if (newNumber == roman.count()) break
     }
-    if (answer == 0) return -1
     return answer
 }
 

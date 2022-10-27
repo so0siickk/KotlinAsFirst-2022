@@ -407,7 +407,7 @@ fun russian(n: Int): String {
                         12 -> answer.append("двенадцать тысяч")
                     }
                     number -= key * (number / (key * 1000) * 1000)
-                    answer.append(" ")
+                    if (((key != 1) && (key != 2) && (key != 11) && (key != 12)) || number != 0) answer.append(" ")
                     count = 1
                     break
                 }

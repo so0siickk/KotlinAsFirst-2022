@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+import lesson7.task1.transliterate
 import ru.spbstu.wheels.defaultCopy
 import java.lang.StringBuilder
 import kotlin.reflect.jvm.internal.impl.descriptors.deserialization.PlatformDependentDeclarationFilter.All
@@ -408,7 +409,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     var answer = (-1 to -1)
-    var sumOfTwo = 0
+    var sumOfTwo: Int
     for (numberOne in list.size - 1 downTo 1) {
         sumOfTwo = list[numberOne]
         for (numberTwo in 0 until numberOne) {
@@ -445,47 +446,73 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val listTreasures = treasures.toList()
-    var price = 0
-    var topPrice = 0
-    val answer = mutableSetOf<String>()
-    val topAnswer = mutableSetOf<String>()
     var weight = 0
-    var count: Int
-    for (numberOne in 0 until treasures.count()) {
-        count = 0
+    val answer = mutableSetOf<String>()
+    for (numberOne in 0 until listTreasures.count()) {
         if ((weight + listTreasures[numberOne].second.first) <= capacity) {
-            weight = listTreasures[numberOne].second.first
-            price = listTreasures[numberOne].second.second
-            answer += (listTreasures[numberOne].first)
-        }
-        while (count != treasures.count() - 1) {
-            for (numberTwo in count until treasures.count()) {
-                if (((weight + listTreasures[numberTwo].second.first) <= capacity) &&
-                    (listTreasures[numberOne].first != listTreasures[numberTwo].first)
+            weight += listTreasures[numberOne].second.first
+            answer += listTreasures[numberOne].first
+        } else {
+            for (answersName in answer) {
+                if ((listTreasures[numberOne].second.first <= treasures[answersName]!!.second)
+                    && (listTreasures[numberOne].second.second > treasures[answersName]!!.first)
                 ) {
-                    weight += listTreasures[numberTwo].second.first
-                    price += listTreasures[numberTwo].second.second
-                    answer += listTreasures[numberTwo].first
+                    weight = weight - treasures[answersName]!!.second + listTreasures[numberOne].second.first
+                    answer.remove(answersName)
+                    answer += listTreasures[numberOne].first
                 }
-                if ((price > topPrice) && (weight <= capacity)) {
-                    topPrice = price
-                    topAnswer.clear()
-                    topAnswer.addAll(answer)
-                }
-                answer.clear()
-                answer += (listTreasures[numberOne].first)
             }
-            weight = listTreasures[numberOne].second.first
-            price = listTreasures[numberOne].second.second
-            count++
         }
-        if ((price > topPrice) && (weight <= capacity)) {
-            topPrice = price
-            topAnswer.clear()
-            topAnswer.addAll(answer)
-        }
-        answer.clear()
     }
+    return answer
+}
+//    val listTreasures = treasures.toList()
+//    var price = 0
+//    var topPrice = 0
+//    val answer = mutableSetOf<String>()
+//    val topAnswer = mutableSetOf<String>()
+//    var weight = 0
+//    var count: Int
+//    for (numberOne in 0 until listTreasures.count()) {
+//        count = 0
+//        if ((weight + listTreasures[numberOne].second.first) <= capacity) {
+//            weight = listTreasures[numberOne].second.first
+//            price = listTreasures[numberOne].second.second
+//            answer += (listTreasures[numberOne].first)
+//        }
+////        println(listTreasures[numberOne].second.first)
+////        println("$numberOne $answer $topAnswer $weight")
+//        while (count != treasures.count() - 1) {
+//            for (numberTwo in count until listTreasures.count()) {
+//                if (((weight + listTreasures[numberTwo].second.first) <= capacity) &&
+//                    (listTreasures[numberOne].first != listTreasures[numberTwo].first)
+//                ) {
+//                    weight += listTreasures[numberTwo].second.first
+//                    price += listTreasures[numberTwo].second.second
+//                    answer += listTreasures[numberTwo].first
+//                }
+//                if ((price > topPrice) && (weight <= capacity)) {
+//                    topPrice = price
+//                    topAnswer.clear()
+//                    topAnswer.addAll(answer)
+//                }
+//                answer.clear()
+//                answer += (listTreasures[numberOne].first)
+//            }
+//            weight = listTreasures[numberOne].second.first
+//            price = listTreasures[numberOne].second.second
+//            count++
+//        }
+//        if ((price > topPrice) && (weight <= capacity)) {
+////            println("$answer $weight")
+//            topPrice = price
+//            topAnswer.clear()
+//            println("$answer $topAnswer $weight")
+//            topAnswer.addAll(answer)
+//            println(topAnswer)
+//        }
+//        answer.clear()
+//    }
 //    for ((nameFirst, dataFirst) in treasures) {
 //        if ((weight + dataFirst.first) <= capacity) {
 //            weight += dataFirst.first
@@ -517,5 +544,5 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
 //            answer += name
 //        }
 //    }
-    return topAnswer
-}
+//    return topAnswer
+//}

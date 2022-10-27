@@ -326,6 +326,22 @@ class Tests {
             bagPacking(
                 mapOf(
                     "0" to (1 to 1),
+                    "1" to (1 to 1),
+                    "2" to (1 to 1),
+                    "3" to (1 to 1),
+                    "4" to (481 to 1),
+                    "5" to (413 to 1),
+                    "6" to (324 to 3),
+                    "7" to (148 to 1),
+                ),
+                914
+            )
+        )
+        assertEquals(
+            setOf("6, 1"),
+            bagPacking(
+                mapOf(
+                    "0" to (1 to 1),
                     "1" to (1 to 2),
                     "2" to (1 to 1),
                     "3" to (1 to 1),

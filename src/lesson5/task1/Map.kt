@@ -382,7 +382,6 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
             for (nameFriend in namesFriends) {
                 if (friends.keys.contains(nameFriend)) {
                     println(answer[name])
-//                  как добавлять элемент в начало seta
                     answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as MutableSet<String>
                 } else answer[nameFriend] = null as MutableSet<String>
             }

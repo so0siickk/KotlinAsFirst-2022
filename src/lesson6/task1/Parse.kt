@@ -196,7 +196,7 @@ fun fromRoman(roman: String): Int {
     var timeString: String
     var newNumber = 0
     for (number in 0 until roman.count()) {
-        if (!glossary.containsKey(roman[newNumber].toString())) return -1
+        if ((!glossary.containsKey(roman[newNumber].toString())) || (roman == "")) return -1
         condition = true
         if (glossary.containsKey(roman[newNumber].toString())) {
             timeString = roman[newNumber].toString()

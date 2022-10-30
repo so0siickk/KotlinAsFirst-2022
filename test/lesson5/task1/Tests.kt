@@ -267,6 +267,17 @@ class Tests {
     @Test
     @Tag("5")
     fun propagateHandshakes() {
+        val expected = mapOf(
+            "Marat" to setOf("Mikhail", "Sveta"),
+            "Sveta" to setOf("Mikhail"),
+            "Mikhail" to setOf()
+        )
+        val actual = propagateHandshakes(
+            mapOf(
+                "Marat" to setOf("Sveta"),
+                "Sveta" to setOf("Mikhail")
+            )
+        )
         assertEquals(
             mapOf(
                 "Marat" to setOf("Mikhail", "Sveta"),

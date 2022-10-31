@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+import lesson1.task1.angleInRadian
+import java.lang.StringBuilder
+import kotlin.math.max
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -162,7 +166,41 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var strPrice = ""
+    var maxPrice = 0.0
+    var name = ""
+    var maxName = ""
+    var condition = true
+    var count = 0
+    for (i in 0 until description.count()) {
+        if (description[count].toString() == ";") {
+            count += 2
+            if (strPrice.toDouble() > maxPrice) {
+                maxPrice = strPrice.toDouble()
+                maxName = name
+            }
+            name = ""
+            strPrice = ""
+            condition = true
+        }
+        if (description[count].toString() == " ") condition = false
+        if (condition) {
+            name += description[count]
+        } else {
+            strPrice += description[count]
+        }
+        count++
+        if (count >= description.count()) break
+    }
+    if ((maxName == "") && (description.isNotEmpty())) {
+        if (strPrice.toDouble() > maxPrice) {
+            maxName = name
+        }
+    }
+    if (description.isEmpty()) return ""
+    return maxName
+}
 
 /**
  * Сложная (6 баллов)
@@ -225,7 +263,7 @@ fun fromRoman(roman: String): Int {
  * Имеется специальное устройство, представляющее собой
  * конвейер из cells ячеек (нумеруются от 0 до cells - 1 слева направо) и датчик, двигающийся над этим конвейером.
  * Строка commands содержит последовательность команд, выполняемых данным устройством, например +>+>+>+>+
- * Каждая команда кодируется одним специальным символом:
+ * Каждая команда кодируется одним специальным сим волом:
  *	> - сдвиг датчика вправо на 1 ячейку;
  *  < - сдвиг датчика влево на 1 ячейку;
  *	+ - увеличение значения в ячейке под датчиком на 1 ед.;

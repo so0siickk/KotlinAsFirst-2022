@@ -193,7 +193,7 @@ fun mostExpensive(description: String): String {
         count++
         if (count >= description.count()) break
     }
-    if ((maxName == "") && (description.isNotEmpty())) {
+    if (description.isNotEmpty()) {
         if (strPrice.toDouble() > maxPrice) {
             maxName = name
         }

@@ -91,7 +91,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     var newLine: String
     var substringLow: String
     for (substring in substrings) {
-        answer[substring] = 0
+        if (answer[substring] != 0) answer[substring] = 0
     }
     for (line in File(inputName).readLines()) {
         newLine = line.toLowerCase()

@@ -106,7 +106,10 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                         countOfChar = 0
                         if (char == substringLow[countOfChar] && substringLow.count() > 1) countOfChar++
                     }
-                } else countOfChar = 0
+                } else {
+                    countOfChar = 0
+                    if (char == substringLow[countOfChar] && substringLow.count() > 1) countOfChar++
+                }
             }
         }
     }

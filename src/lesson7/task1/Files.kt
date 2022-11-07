@@ -248,6 +248,7 @@ fun top20Words(inputName: String): Map<String, Int> {
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
+    println(("я").hashCode())
     val outputFile = File(outputName).bufferedWriter()
     val newDictionary = mutableMapOf<Char, String>()
     for ((key, value) in dictionary) {
@@ -257,9 +258,12 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
     for (line in File(inputName).readLines()) {
         for (char in line) {
             if (newDictionary.keys.contains(char.lowercaseChar())) {
-                if (char == char.uppercaseChar()) {
+                if ((char == char.uppercaseChar()) && (((char.hashCode() > 64) && (char.hashCode() < 123))
+                            || ((char.hashCode() > 1039) && (char.hashCode() < 1104)))
+                ) {
                     outputFile.write(
-                        (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString())
+                        (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString()
+                    )
                 } else
                     outputFile.write(newDictionary[char]?.lowercase(Locale.getDefault()).toString())
             } else {

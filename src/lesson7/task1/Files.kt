@@ -259,13 +259,13 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
             if (newDictionary.keys.contains(char.lowercaseChar())) {
                 if ((char == char.uppercaseChar()) && (((char.hashCode() > 64) && (char.hashCode() < 123))
                             || ((char.hashCode() > 1039) && (char.hashCode() < 1104)) &&
-                            char == (char.hashCode()).toChar())
+                            char.toString() == (char.hashCode()).toString())
                 ) {
                     outputFile.write(
                         (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString()
                     )
                 } else
-                    outputFile.write(newDictionary[char]?.lowercase(Locale.getDefault()).toString())
+                    outputFile.write(newDictionary[char]?.toLowerCase())
             } else {
                 outputFile.write(char.toString())
             }

@@ -257,15 +257,15 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
     for (line in File(inputName).readLines()) {
         for (char in line) {
             if (newDictionary.keys.contains(char.lowercaseChar())) {
-                if ((char == char.uppercaseChar()) && (((char.hashCode() > 64) && (char.hashCode() < 123))
-                            || ((char.hashCode() > 1039) && (char.hashCode() < 1104))) &&
-                    char == (char.hashCode()).toChar()
+                if ((char == char.uppercaseChar()) && (((char.hashCode() > 64) && (char.hashCode() < 91))
+                            || ((char.hashCode() > 1039) && (char.hashCode() < 1104))) ||
+                    ((char.hashCode() > 97) && (char).hashCode() < 123)
                 ) {
                     outputFile.write(
                         (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString()
                     )
                 } else
-                    outputFile.write(newDictionary[char]?.toLowerCase().toString())
+                    outputFile.write(newDictionary[char]?.lowercase(Locale.getDefault()).toString())
             } else {
                 outputFile.write(char.toString())
             }

@@ -4,6 +4,7 @@ package lesson7.task1
 
 import java.io.File
 import java.io.FileInputStream
+import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -95,10 +96,10 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
         answer[substring] = 0
     }
     for (line in File(inputName).readLines()) {
-        newLine = line.toLowerCase()
+        newLine = line.lowercase(Locale.getDefault())
         for (substring in startSubstring) {
             countOfChar = 0
-            substringLow = substring.toLowerCase()
+            substringLow = substring.lowercase(Locale.getDefault())
             for (char in newLine) {
                 if (char == substringLow[countOfChar]) {
                     countOfChar++
@@ -207,7 +208,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    TODO()
+}
 
 /**
  * Средняя (14 баллов)
@@ -245,7 +248,27 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val outputFile = File(outputName).bufferedWriter()
+    val newDictionary = mutableMapOf<Char, String>()
+    for ((key, value) in dictionary) {
+        if (key == key.uppercaseChar()) newDictionary[key.lowercaseChar()] = value
+        else newDictionary[key] = value
+    }
+    for (line in File(inputName).readLines()) {
+        for (char in line) {
+            if (newDictionary.keys.contains(char.lowercaseChar())) {
+                if (char == char.uppercaseChar()) {
+                    outputFile.write(
+                        (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString())
+                } else
+                    outputFile.write(newDictionary[char]?.lowercase(Locale.getDefault()).toString())
+            } else {
+                outputFile.write(char.toString())
+            }
+        }
+        outputFile.newLine()
+    }
+    outputFile.close()
 }
 
 /**

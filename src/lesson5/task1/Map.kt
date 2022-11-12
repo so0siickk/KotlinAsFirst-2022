@@ -246,11 +246,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var lowestPrice: Double? = null
     for ((name, pairData) in stuff) {
         if (pairData.first == kind) {
-            println(lowestPrice)
-            if ((lowestPrice!! > pairData.second)) {
+            if (lowestPrice == null) {
                 lowestPrice = pairData.second
                 answer = name
-            } else {
+            }
+            if ((lowestPrice!! > pairData.second)) {
                 lowestPrice = pairData.second
                 answer = name
             }

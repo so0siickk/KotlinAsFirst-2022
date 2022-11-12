@@ -189,7 +189,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
         if (!answers.contains(key)) {
             answers[key] = value
         } else {
-            if ((!answers[key]?.contains(value)!!) || (value == "")) answers[key] += (", $value")
+            if ((value != answers[key]!!) || (value == "")) answers[key] += (", $value")
         }
     }
     return answers
@@ -269,11 +269,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val charsSet = chars.toSet()
+    val charsSet = chars.map { it.toLowerCase() }.toSet()
     val lowWord = word.toLowerCase()
     var answer = true
     for (i in lowWord) {
-        if (!charsSet.contains(i.toLowerCase())) {
+        if (!charsSet.contains(i)) {
             answer = false
             break
         }

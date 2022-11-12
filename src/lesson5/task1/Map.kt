@@ -143,11 +143,12 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    var count = 0
+    val deleteMap = mutableMapOf<String, String>()
     for ((key, _) in a) {
-        if (a[key] == b[key]) a.remove(key)
-        count++
-        if (a.count() == count) break
+        if (a[key] == b[key]) deleteMap[key] = ""
+    }
+    for ((key, _) in deleteMap) {
+        a.remove(key)
     }
 }
 
@@ -159,9 +160,9 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val answer = mutableListOf<String>()
-    for (name in a) if ((name in b) && name !in answer) answer.add(name)
-    return answer
+    val answer = mutableSetOf<String>()
+    for (name in a) if (name in b) answer.add(name)
+    return answer.toList()
 }
 
 /**
@@ -182,20 +183,16 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    val answer = mutableMapOf<String, String>()
-    for ((key, value) in mapA) {
-        answer[key] = value
-    }
+    val answers = mutableMapOf<String, String>()
+    answers.putAll(mapA)
     for ((key, value) in mapB) {
-        if (!answer.contains(key)) {
-            answer[key] = value
-        } else if ((!answer.containsValue(value)) && (value != "")) answer[key] += (", $value")
-        if (value == "") {
-            if (answer[key]!!.isNotEmpty()) answer[key] += (", ")
-            else answer[key] = ""
+        if (!answers.contains(key)) {
+            answers[key] = value
+        } else {
+            if ((!answers[key]?.contains(value)!!) || (value == "")) answers[key] += (", $value")
         }
     }
-    return answer
+    return answers
 }
 
 /**
@@ -209,26 +206,24 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val answer = mutableMapOf<String, Double>()
+    val answers = mutableMapOf<String, Double>()
     var count = 1
     var lastKey = String()
     for ((product, price) in stockPrices) {
-        if (!answer.keys.contains(product)) {
-            println(answer)
-            if (answer.isNotEmpty()) {
-                answer[lastKey] = answer[lastKey]!! / count
+        if (!answers.keys.contains(product)) {
+            if (answers.isNotEmpty()) {
+                answers[lastKey] = answers[lastKey]!! / count
             }
             count = 1
-            answer[product] = price
+            answers[product] = price
         } else {
             count++
-            answer[product] = answer[product]!! + price
+            answers[product] = answers[product]!! + price
             lastKey = product
         }
     }
-//    println(answer)
-    if (answer.isNotEmpty() && (lastKey != "")) answer[lastKey] = answer[lastKey]!! / count
-    return answer
+    if (answers.isNotEmpty() && (lastKey != "")) answers[lastKey] = answers[lastKey]!! / count
+    return answers
 }
 
 /**
@@ -251,11 +246,10 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var lowestPrice: Double? = null
     for ((name, pairData) in stuff) {
         if (pairData.first == kind) {
-            if (lowestPrice != null) {
-                if (lowestPrice > pairData.second) {
-                    lowestPrice = pairData.second
-                    answer = name
-                }
+            println(lowestPrice)
+            if ((lowestPrice!! > pairData.second)) {
+                lowestPrice = pairData.second
+                answer = name
             } else {
                 lowestPrice = pairData.second
                 answer = name
@@ -275,9 +269,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val charsSet = chars.toSet()
+    val lowWord = word.toLowerCase()
     var answer = true
-    for (i in word) {
-        if (!chars.contains(i)) {
+    for (i in lowWord) {
+        if (!charsSet.contains(i.toLowerCase())) {
             answer = false
             break
         }

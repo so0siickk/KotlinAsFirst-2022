@@ -209,7 +209,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     val sortedStockPrice = stockPrices.sortedBy { it.first }
     val answers = mutableMapOf<String, Double>()
     var count = 1
-    var lastKey:String? = null
+    var lastKey: String? = null
     for ((product, price) in sortedStockPrice) {
         if (!answers.keys.contains(product)) {
             if ((product != lastKey) && (lastKey != null)) {
@@ -370,16 +370,17 @@ fun hasAnagrams(words: List<String>): Boolean {
  */
 
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    val answer = mutableMapOf<String, MutableSet<String>>()
+    val answer = mutableMapOf<String, Set<String>>()
     for ((name, namesFriends) in friends) {
-        if (answer.keys.contains(name)) answer[name]!!.addAll(namesFriends)
-        else {
-            answer[name] = namesFriends as MutableSet<String>
+        if (answer.keys.contains(name)) {
+            answer[name] = answer[name]?.plus(namesFriends) as Set<String>
+        } else {
+            answer[name] = namesFriends
             for (nameFriend in namesFriends) {
                 if (friends.keys.contains(nameFriend)) {
-                    println(answer[name])
-                    answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as MutableSet<String>
-                } else answer[nameFriend] = null as MutableSet<String>
+                    if (name != friends[nameFriend]?.first())
+                        answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as Set<String>
+                } else answer[nameFriend] = emptySet()
             }
         }
     }
@@ -440,44 +441,19 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun listSort(startMap: Map<String, Pair<Int, Int>>): Map<String, Pair<Int, Int>> {
-    val startData = startMap.toList()
-    var condition = true
-    while (condition) {
-        condition = false
-        for (number in 1 until startData.count()) {
-            if (startData[number - 1].second.second < startData[number].second.second) {
-                Collections.swap(startData, number - 1, number)
-                condition = true
-            }
-        }
-    }
-    return startData.toMap()
-}
+//fun listSort(startMap: Map<String, Pair<Int, Int>>): Map<String, Pair<Int, Int>> {
+//    val startData = startMap.toList()
+//    var condition = true
+//    while (condition) {
+//        condition = false
+//        for (number in 1 until startData.count()) {
+//            if (startData[number - 1].second.second < startData[number].second.second) {
+//                Collections.swap(startData, number - 1, number)
+//                condition = true
+//            }
+//        }
+//    }
+//    return startData.toMap()
+//}
 
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val listTreasures = listSort(treasures).toList()
-    var weight = 0
-    val answer = mutableSetOf<String>()
-    for (numberOne in 0 until listTreasures.count()) {
-        if ((weight + listTreasures[numberOne].second.first) <= capacity) {
-            weight += listTreasures[numberOne].second.first
-            answer += listTreasures[numberOne].first
-        } else {
-            for (answersName in answer) {
-                if ((((weight + listTreasures[numberOne].second.first - treasures[answersName]!!.first) <= capacity)
-                            && (listTreasures[numberOne].second.second > treasures[answersName]!!.second)) || (
-                            (listTreasures[numberOne].second.second == treasures[answersName]!!.second) &&
-                                    (listTreasures[numberOne].second.first < treasures[answersName]!!.first)
-                            )
-                ) {
-                    weight = weight - treasures[answersName]!!.first + listTreasures[numberOne].second.first
-                    answer.remove(answersName)
-                    answer += listTreasures[numberOne].first
-                    break
-                }
-            }
-        }
-    }
-    return answer.toList().reversed().toSet()
-}
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()

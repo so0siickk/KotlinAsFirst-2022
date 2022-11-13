@@ -186,8 +186,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     val answers = mutableMapOf<String, String>()
     answers.putAll(mapA)
     for ((key, value) in mapB) {
-        if (!answers.contains(key) || ((key == "") && (answers[key]?.isEmpty() == true))) {
+        if (!answers.contains(key)) {
             answers[key] = value
+            println(answers)
         } else {
             if ((value != answers[key]!!) || (value == "")) answers[key] += (", $value")
         }
@@ -322,7 +323,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 fun hasAnagrams(words: List<String>): Boolean {
     var answer = false
-
     for (numberF in words.indices) {
         for (numberS in numberF until words.size) {
             if (words[numberF] == words[numberS].reversed()) {
@@ -443,20 +443,12 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 fun listSort(startMap: Map<String, Pair<Int, Int>>): Map<String, Pair<Int, Int>> {
     val startData = startMap.toList()
-    var timeName: String
-    var timeData: Pair<Int, Int>
     var condition = true
     while (condition) {
         condition = false
         for (number in 1 until startData.count()) {
             if (startData[number - 1].second.second < startData[number].second.second) {
                 Collections.swap(startData, number - 1, number)
-//                timeName = startData[number - 1].first
-//                timeData = startData[number - 1].second
-//                startData[number - 1].first = startData[number].first
-//                startData[number - 1].second = startData[number].second
-//                startData[number].first = timeName
-//                startData[number].second = timeData
                 condition = true
             }
         }

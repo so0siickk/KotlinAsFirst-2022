@@ -377,7 +377,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
         } else {
             answer[name] = namesFriends
             for (nameFriend in namesFriends) {
-                if (friends.keys.contains(nameFriend)) {
+                if (friends.keys.contains(nameFriend) && friends[nameFriend]!!.isNotEmpty()) {
                     if (name != friends[nameFriend]?.first())
                         answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as Set<String>
                 } else answer[nameFriend] = emptySet()

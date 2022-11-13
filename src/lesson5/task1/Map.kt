@@ -206,14 +206,12 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val sortedStockPrice = stockPrices.sortedBy { it.first }
     val answers = mutableMapOf<String, Double>()
     var count = 1
     var lastKey:String? = null
-    for ((product, price) in stockPrices) {
+    for ((product, price) in sortedStockPrice) {
         if (!answers.keys.contains(product)) {
-            println(answers.keys)
-            println(product)
-            println(lastKey)
             if ((product != lastKey) && (lastKey != null)) {
                 answers[lastKey] = answers[lastKey]!! / count
             }

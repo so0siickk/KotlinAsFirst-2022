@@ -315,9 +315,9 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun decimalFromString(str: String, base: Int): Int {
     val list = mutableListOf<String>()
     for (i in str) list.add(i.toString())
-    for (i in 0 until list.count()) if ((list[i].hashCode()) > 86 && (list[i].hashCode() < 123)) {
-        list[i] = (list[i].hashCode() + 10 - 'a'.code).toString()
-    }
+    for (i in 0 until list.count()) if ((list[i].toCharArray()[0].code) > 86
+        && (list[i].toCharArray()[0].code < 123)
+    ) list[i] = (list[i].toCharArray()[0].code + 10 - 'a'.code).toString()
     return decimal(list.map { it.toInt() }, base)
 }
 
@@ -400,16 +400,20 @@ fun russian(n: Int): String {
             if (number > 1000) {
                 if (number >= key * 1000) {
                     if ((key != 1) && (key != 2) && (key != 11) && (key != 12)) answer.append(value)
-                    else when (key) {
-                        1 -> answer.append("одна тысяча")
-                        2 -> answer.append("две тысячи")
-                        11 -> answer.append("одиннадцать тысяч")
-                        12 -> answer.append("двенадцать тысяч")
+                    else {
+                        when (key) {
+                            1 -> answer.append("одна тысяча")
+                            2 -> answer.append("две тысячи")
+                            11 -> answer.append("одиннадцать тысяч")
+                            12 -> answer.append("двенадцать тысяч")
+                        }
+                        number %= (key * 1000)
+                        if (number != 0) answer.append(" ")
+                        break
                     }
-                    number -= key * (number / (key * 1000) * 1000)
+                    number %= (key * 1000)
                     if (((key != 1) && (key != 2) && (key != 11) && (key != 12)) || number != 0) answer.append(" ")
                     count = true
-                    break
                 }
             }
             if (number < 1001) {
@@ -424,6 +428,7 @@ fun russian(n: Int): String {
                     )
                     answer.append(" ")
                     count = false
+                    break
                 }
                 if (number >= key) {
                     answer.append(value)
@@ -433,15 +438,6 @@ fun russian(n: Int): String {
             }
         }
     }
-    if (("тысяч" !in answer) || ("тысячи" !in answer)) {
-        if ((count == true) && (thousand % 10 != 2) && (thousand % 10 != 1)) {
-            answer.append(
-                when {
-                    (thousand % 10 > 4) || (thousand >= 100) || ((number == 0) && (thousand > 4)) -> "тысяч"
-                    else -> "тысячи"
-                }
-            )
-        }
-    }
+    if (answer[answer.length - 1] == ' ') answer.replace(answer.length - 1, answer.length, "")
     return answer.toString()
 }

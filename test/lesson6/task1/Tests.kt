@@ -153,4 +153,16 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
     }
+
+    //Тест
+    @Test
+    fun taxCounter() {
+        assertThrows(IllegalArgumentException::class.java) {
+            lesson6.task1.taxCounter(
+                " y.e. - 0%; 40000 y.e. - 5%; else - 25%",
+                40000
+            )
+        }
+        assertEquals(1000, lesson6.task1.taxCounter("20000 y.e. - 0%; 40000 y.e. - 5%; else - 25%", 40000))
+    }
 }

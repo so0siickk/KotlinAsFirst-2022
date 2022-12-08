@@ -314,10 +314,15 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun decimalFromString(str: String, base: Int): Int {
     val list = mutableListOf<String>()
+    var codeLetter: Int
+    var asciiLetterA = 'a'.code
     for (i in str) list.add(i.toString())
-    for (i in 0 until list.count()) if ((list[i].toCharArray()[0].code) > 86
-        && (list[i].toCharArray()[0].code < 123)
-    ) list[i] = (list[i].toCharArray()[0].code + 10 - 'a'.code).toString()
+    for (i in 0 until list.count()) {
+        codeLetter = list[i].toCharArray()[0].code
+        if ((codeLetter > 86)
+            && (codeLetter < 123)
+        ) list[i] = (codeLetter + 10 - asciiLetterA).toString()
+    }
     return decimal(list.map { it.toInt() }, base)
 }
 

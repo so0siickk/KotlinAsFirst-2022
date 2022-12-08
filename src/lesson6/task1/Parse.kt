@@ -3,6 +3,8 @@
 package lesson6.task1
 
 import lesson1.task1.angleInRadian
+import java.lang.Exception
+import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
 import kotlin.math.max
 
@@ -294,3 +296,26 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+
+//Тест
+fun taxCounter(taxes: String, money: Int): Int {
+    var answerTax = 0
+    var stringTax: List<String>
+    var textTaxes: List<String>
+    val taxesMap = mutableMapOf<Int, String>()
+    if (!Regex("""(\d+ y\.e\. - \d+%; )+else - \d+%""").containsMatchIn(taxes.toString())) throw IllegalArgumentException()
+    else {
+        textTaxes = taxes.split(';')
+        for (tax in textTaxes) {
+            println(tax)
+            stringTax = tax.split(" ")
+            println(stringTax[0])
+            taxesMap[(stringTax[0].replace("\\s".toRegex(), "").toInt())] =
+                (stringTax[3].replace("\\s|%".toRegex(), ""))
+            println(taxesMap)
+//
+//            println(tax.split(" "))
+        }
+    }
+    return answerTax
+}

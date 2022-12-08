@@ -6,7 +6,6 @@ import lesson7.task1.transliterate
 import ru.spbstu.wheels.defaultCopy
 import java.lang.StringBuilder
 import java.util.Collections
-import kotlin.reflect.jvm.internal.impl.descriptors.deserialization.PlatformDependentDeclarationFilter.All
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -143,11 +142,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    val deleteMap = mutableMapOf<String, String>()
+    val deleteMap = mutableSetOf<String>()
     for ((key, _) in a) {
-        if (a[key] == b[key]) deleteMap[key] = ""
+        if (a[key] == b[key]) deleteMap.add(key)
     }
-    for ((key, _) in deleteMap) {
+    for (key in deleteMap) {
         a.remove(key)
     }
 }
@@ -161,7 +160,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val answer = mutableSetOf<String>()
-    for (name in a) if (name in b) answer.add(name)
+    for (name in a.toSet()) if (name in b) answer.add(name)
     return answer.toList()
 }
 
@@ -206,11 +205,11 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val sortedStockPrice = stockPrices.sortedBy { it.first }
+    val sortedStockPrices = stockPrices.sortedBy { it.first }
     val answers = mutableMapOf<String, Double>()
     var count = 1
     var lastKey: String? = null
-    for ((product, price) in sortedStockPrice) {
+    for ((product, price) in sortedStockPrices) {
         if (!answers.keys.contains(product)) {
             if ((product != lastKey) && (lastKey != null)) {
                 answers[lastKey] = answers[lastKey]!! / count
@@ -247,11 +246,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var lowestPrice: Double? = null
     for ((name, pairData) in stuff) {
         if (pairData.first == kind) {
-            if (lowestPrice == null) {
-                lowestPrice = pairData.second
-                answer = name
-            }
-            if ((lowestPrice!! > pairData.second)) {
+            if ((lowestPrice == null) || (lowestPrice!! > pairData.second)) {
                 lowestPrice = pairData.second
                 answer = name
             }

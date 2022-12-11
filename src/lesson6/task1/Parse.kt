@@ -298,24 +298,76 @@ fun fromRoman(roman: String): Int {
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
 
 //Тест
-fun taxCounter(taxes: String, money: Int): Int {
-    var answerTax = 0
-    var stringTax: List<String>
-    var textTaxes: List<String>
-    val taxesMap = mutableMapOf<Int, String>()
-    if (!Regex("""(\d+ y\.e\. - \d+%; )+else - \d+%""").containsMatchIn(taxes.toString())) throw IllegalArgumentException()
-    else {
-        textTaxes = taxes.split(';')
-        for (tax in textTaxes) {
-            println(tax)
-            stringTax = tax.split(" ")
-            println(stringTax[0])
-            taxesMap[(stringTax[0].replace("\\s".toRegex(), "").toInt())] =
-                (stringTax[3].replace("\\s|%".toRegex(), ""))
-            println(taxesMap)
+//fun gasStation(carPetrol: Map<String, String>, gasStations: String): Map<String, String> {
+//    var answer = mutableMapOf<String, String>()
+//    var bestChoice = mutableMapOf<String, String>()
+//    var prices = mutableMapOf<String, String>()
+//    var currentName: String
+//    var nextName = ""
+//    var trueGas: String
+//    var truevalue: String
+//    var keyAndValue: List<String>
+//    var allGas: List<String>
+//    val listGasStations: List<String>
+//    if (Regex("""([а-яА-Яa-zA-Z]+:( [а-яА-Я]+(\s\d+\s|\s)- (\d+\.\d+|\d+);)+)+""").matches(gasStations)) {
+//        listGasStations = gasStations.split(':')
+//        currentName = listGasStations[0]
+//        for (stringGasStation in listGasStations) {
+//            if (';' in stringGasStation) nextName =
+//                stringGasStation.replace("( [а-яА-Я]+(\\s\\d+\\s|\\s)- (\\d+\\.\\d+|\\d+);)".toRegex(), "")
+//            trueGas = stringGasStation.replace("\\s".toRegex(), "")
+//            allGas = trueGas.split(';')
+//            for (strGas in allGas) {
+//                keyAndValue = strGas.split('-')
+//                if (keyAndValue.size > 1) {
+//                    if (!prices.keys.contains(keyAndValue[0])) {
+//                        prices[keyAndValue[0]] = keyAndValue[1]
+//                        if (!bestChoice.keys.contains(keyAndValue[0])) {
+//                            bestChoice[keyAndValue[0]] = currentName
+//                        }
+//                    } else {
+//                        if (prices[keyAndValue[0]]?.toDouble()!! > keyAndValue[1].toDouble()) {
+//                            prices[keyAndValue[0]] = keyAndValue[1]
+//                            bestChoice[keyAndValue[0]] = currentName
+//                        }
+//                    }
+//                }
+//            }
+//            if (stringGasStation.contains(';')) currentName = nextName
+//        }
+//    } else throw IllegalArgumentException()
 //
-//            println(tax.split(" "))
-        }
-    }
-    return answerTax
-}
+//    println(prices)
+//    println(bestChoice)
+//    println(carPetrol)
+//    for ((key, value) in carPetrol) {
+//        truevalue = value.replace("\\s".toRegex(), "")
+//        println(truevalue)
+//        println(bestChoice.keys)
+//        if (value in bestChoice.keys) answer[key] = "gag"
+//        else throw IllegalStateException()
+//    }
+//    return answer
+//}
+
+
+//fun taxCounter(taxes: String, money: Int): Int {
+//    var answerTax = 0
+//    var stringTax: MutableList<String>
+//    var textTaxes: List<String>
+//    val taxesMap = mutableMapOf<String, Int>()
+//    if (Regex("""(\d+ y\.e\. - \d+%; )+else - \d+%""").matches(taxes)) {
+//        textTaxes = taxes.split(';')
+//        for (tax in textTaxes) {
+//            println(tax)
+//            stringTax = tax.split(" ") as MutableList<String>
+//            println(stringTax)
+//            if (stringTax[0] == "") stringTax.removeAt(0)
+//            println(stringTax[0])
+//            taxesMap[(stringTax[0].replace("\\s".toRegex(), ""))] =
+//                (stringTax[3].replace("\\s|%".toRegex(), "")).toInt()
+//            println(taxesMap)
+//        }
+//    } else throw IllegalArgumentException()
+//    return answerTax
+//}

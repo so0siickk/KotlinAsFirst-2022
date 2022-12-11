@@ -188,7 +188,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
         if (!answers.contains(key)) {
             answers[key] = value
         } else {
-            if ((value != answers[key]!!) || (value == "")) answers[key] += (", $value")
+            if ((value != answers[key]!!)) answers[key] += (", $value")
         }
     }
     return answers

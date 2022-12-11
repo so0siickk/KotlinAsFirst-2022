@@ -155,14 +155,56 @@ class Tests {
     }
 
     //Тест
-    @Test
-    fun taxCounter() {
-        assertThrows(IllegalArgumentException::class.java) {
-            lesson6.task1.taxCounter(
-                " y.e. - 0%; 40000 y.e. - 5%; else - 25%",
-                40000
-            )
-        }
-        assertEquals(1000, lesson6.task1.taxCounter("20000 y.e. - 0%; 40000 y.e. - 5%; else - 25%", 40000))
-    }
+//    @Test
+//
+//    fun gasStation() {
+//        assertThrows(IllegalArgumentException::class.java) {
+//            lesson6.task1.gasStation(
+//                mapOf("faf" to "fafaf", "fafaf" to " fafaf"), "e. - 5%; else - 25%",
+//            )
+//        }
+//        assertEquals(
+//            "Lada Vesta - Газпром" +
+//                    "Lada Niva - Shell" +
+//                    "BMW M5 - Лукойл" +
+//                    "Копейка - Газпром" +
+//                    "Трактор - Лукойл", lesson6.task1.gasStation(
+//                mapOf(
+//                    "Lada Vesta" to "бензин 98",
+//                    "Lada Niva" to "дизель",
+//                    "BMW M5" to "бензин 95",
+//                    "Копейка" to "бензин 88",
+//                    "Трактор" to "солярка"
+//                ),
+//                "Лукойл: бензин 95 - 44.66; дизель - 60.76; солярка - 10;" +
+//                        "Газпром: бензин 98 - 50.00; бензин 88 - 34.30;" +
+//                        "Shell: бензин 66 - 23.00; дизель - 55.50;",
+//            )
+//        )
+//        assertThrows(java.lang.IllegalStateException::class.java) {
+//            lesson6.task1.gasStation(
+//                mapOf(
+//                    "Lada Vesta" to "бензин 98",
+//                    "Lada Niva" to "дизель",
+//                    "BMW M5" to "бензин 95",
+//                    "Копейка" to "бензин 88",
+//                    "Трактор" to "солярка"
+//                ),
+//                "Лукойл: бензин 95 - 44.66; дизель - 60.76; солярка - 10;" +
+//                        "Газпром: бензин 98 - 50.00; бензин 88 - 34.30;" +
+//                        "Shell: бензин 66 - 23.00; дизель - 55.50;",
+//            )
+//        }
+//
+//    }
+
+//    fun taxCounter() {
+//        assertThrows(IllegalArgumentException::class.java) {
+//            lesson6.task1.taxCounter(
+//                " y.e. - 0%; 40000 y.e. - 5%; else - 25%",
+//                40000
+//            )
+//        }
+//        assertEquals(1000, lesson6.task1.taxCounter("20000 y.e. - 0%; 40000 y.e. - 5%; else - 25%", 40000))
+//    }
 }

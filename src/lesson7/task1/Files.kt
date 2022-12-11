@@ -2,8 +2,10 @@
 
 package lesson7.task1
 
+import ru.spbstu.wheels.out
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileWriter
 import java.util.*
 
 // Урок 7: работа с файлами

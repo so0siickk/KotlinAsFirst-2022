@@ -171,7 +171,6 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 
-
 fun mostExpensive(description: String): String {
     val pattern = Regex("""( *\D+ (\d*\.\d*|\d*);*)+""")
     val listOfProdutcs: List<String>

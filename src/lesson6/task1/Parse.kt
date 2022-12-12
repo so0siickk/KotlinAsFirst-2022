@@ -171,26 +171,26 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 
-fun mostExpensive(description: String): String {
-    val pattern = Regex("""( *\D+ (\d*\.\d*|\d*);*)+""")
-    val listOfProdutcs: List<String>
-    var pairOfProduct: kotlin.Pair<String, Double>
-    var maxPrice = -1.0
-    var expensiveProduct = ""
-    if (pattern.containsMatchIn(description)) {
-        if (";" in description) {
-            listOfProdutcs = description.split("; ").toMutableList()
-            for (stringProduct in listOfProdutcs) {
-                pairOfProduct = stringProduct.split(" ")[0].toString() to stringProduct.split(" ")[1].toDouble()
-                if (pairOfProduct.second > maxPrice) {
-                    maxPrice = pairOfProduct.second
-                    expensiveProduct = pairOfProduct.first
-                }
-            }
-        } else return description.split(" ")[0]
-    }
-    return expensiveProduct
-}
+//fun mostExpensive(description: String): String {
+//    val pattern = Regex("""( *\D+ (\d*\.\d*|\d*);*)+""")
+//    val listOfProdutcs: List<String>
+//    var pairOfProduct: kotlin.Pair<String, Double>
+//    var maxPrice = -1.0
+//    var expensiveProduct = ""
+//    if (pattern.containsMatchIn(description)) {
+//        if (";" in description) {
+//            listOfProdutcs = description.split("; ").toMutableList()
+//            for (stringProduct in listOfProdutcs) {
+//                pairOfProduct = stringProduct.split(" ")[0].toString() to stringProduct.split(" ")[1].toDouble()
+//                if (pairOfProduct.second > maxPrice) {
+//                    maxPrice = pairOfProduct.second
+//                    expensiveProduct = pairOfProduct.first
+//                }
+//            }
+//        } else return description.split(" ")[0]
+//    }
+//    return expensiveProduct
+//}
 
 
 /**

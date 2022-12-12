@@ -333,23 +333,23 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *        )
  */
 
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    val answer = mutableMapOf<String, Set<String>>()
-    for ((name, namesFriends) in friends) {
-        if (answer.keys.contains(name)) {
-            answer[name] = answer[name]?.plus(namesFriends) as Set<String>
-        } else {
-            answer[name] = namesFriends
-            for (nameFriend in namesFriends) {
-                if (friends.keys.contains(nameFriend) && friends[nameFriend]!!.isNotEmpty()) {
-                    if (name != friends[nameFriend]?.first())
-                        answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as Set<String>
-                } else answer[nameFriend] = emptySet()
-            }
-        }
-    }
-    return answer
-}
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+//    val answer = mutableMapOf<String, Set<String>>()
+//    for ((name, namesFriends) in friends) {
+//        if (answer.keys.contains(name)) {
+//            answer[name] = answer[name]?.plus(namesFriends) as Set<String>
+//        } else {
+//            answer[name] = namesFriends
+//            for (nameFriend in namesFriends) {
+//                if (friends.keys.contains(nameFriend) && friends[nameFriend]!!.isNotEmpty()) {
+//                    if (name != friends[nameFriend]?.first())
+//                        answer[name] = (answer[name]?.plus(friends[nameFriend]?.first())) as Set<String>
+//                } else answer[nameFriend] = emptySet()
+//            }
+//        }
+//    }
+//    return answer
+//}
 
 /**
  * Сложная (6 баллов)

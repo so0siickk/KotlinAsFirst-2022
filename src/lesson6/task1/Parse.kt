@@ -189,6 +189,7 @@ fun mostExpensive(description: String): String {
     return expensiveProduct
 }
 
+
 /**
  * Сложная (6 баллов)
  *

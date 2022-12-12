@@ -2,7 +2,6 @@
 
 package lesson6.task1
 
-import javafx.util.Pair
 import lesson1.task1.angleInRadian
 import java.lang.Exception
 import java.lang.IllegalArgumentException

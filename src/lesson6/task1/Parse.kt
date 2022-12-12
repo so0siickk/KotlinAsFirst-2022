@@ -2,10 +2,12 @@
 
 package lesson6.task1
 
+import javafx.util.Pair
 import lesson1.task1.angleInRadian
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
+import kotlin.jvm.internal.Intrinsics.Kotlin
 import kotlin.math.max
 
 // Урок 6: разбор строк, исключения
@@ -168,40 +170,27 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
+
+
 fun mostExpensive(description: String): String {
-    var strPrice = ""
-    var maxPrice = 0.0
-    var name = ""
-    var maxName = ""
-    var condition = true
-    var count = 0
-    for (i in 0 until description.count()) {
-        if (description[count].toString() == ";") {
-            count += 2
-            if (strPrice.toDouble() > maxPrice) {
-                maxPrice = strPrice.toDouble()
-                maxName = name
+    val pattern = Regex("""( *\D+ (\d*\.\d*|\d*);*)+""")
+    val listOfProdutcs: List<String>
+    var pairOfProduct: kotlin.Pair<String, Double>
+    var maxPrice = -1.0
+    var expensiveProduct = ""
+    if (pattern.containsMatchIn(description)) {
+        if (";" in description) {
+            listOfProdutcs = description.split("; ").toMutableList()
+            for (stringProduct in listOfProdutcs) {
+                pairOfProduct = stringProduct.split(" ")[0].toString() to stringProduct.split(" ")[1].toDouble()
+                if (pairOfProduct.second > maxPrice) {
+                    maxPrice = pairOfProduct.second
+                    expensiveProduct = pairOfProduct.first
+                }
             }
-            name = ""
-            strPrice = ""
-            condition = true
-        }
-        if (description[count].toString() == " ") condition = false
-        if (condition) {
-            name += description[count]
-        } else {
-            strPrice += description[count]
-        }
-        count++
-        if (count >= description.count()) break
+        } else return description.split(" ")[0]
     }
-    if (description.isNotEmpty()) {
-        if (strPrice.toDouble() >= maxPrice) {
-            maxName = name
-        }
-    }
-    if (description.isEmpty()) return ""
-    return maxName
+    return expensiveProduct
 }
 
 /**

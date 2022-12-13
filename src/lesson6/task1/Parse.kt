@@ -223,7 +223,7 @@ fun fromRoman(roman: String): Int {
     var condition: Boolean
     var timeString: String
     var newNumber = 0
-    if (!pattern.matches(roman)) return -1
+    if ((!pattern.matches(roman))||(roman == "")) return -1
     for (number in 0 until roman.count()) {
         if (!glossary.containsKey(roman[newNumber].toString())) return -1
         condition = true

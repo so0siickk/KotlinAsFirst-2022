@@ -94,6 +94,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     var newLine: String
     val startSubstring = substrings.toSet()
     var substringLow: String
+    var currentList: List<String>
     for (substring in startSubstring) {
         answer[substring] = 0
     }
@@ -102,19 +103,12 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
         for (substring in startSubstring) {
             countOfChar = 0
             substringLow = substring.lowercase(Locale.getDefault())
-            for (char in newLine) {
-                if (char == substringLow[countOfChar]) {
-                    countOfChar++
-                    if (countOfChar == substringLow.count()) {
-                        answer[substring] = answer[substring]!! + 1
-                        countOfChar = 0
-                        if (char == substringLow[countOfChar] && substringLow.count() > 1) countOfChar++
-                    }
-                } else {
-                    countOfChar = 0
-                    if (char == substringLow[countOfChar] && substringLow.count() > 1) countOfChar++
-                }
+            currentList = newLine.windowed(substringLow.length, 1)
+            for (window in currentList) {
+                if (window == substringLow) countOfChar++
             }
+            if (answer.keys.contains(substring)) answer[substring] = answer[substring]!! + countOfChar
+            else answer[substring] = countOfChar
         }
     }
     return answer

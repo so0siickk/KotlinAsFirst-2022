@@ -76,7 +76,18 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val answer = createMatrix(height, width, 0)
+    var currentCell = 1
+    while (currentCell == 0) {
+        for (x in 0 until width) {
+            for (y in 0 until width) {
+                if ((x == 0) || (x == width - 1) || (y == 0) || (y == height - 1)) answer[y, x] = 1
+            }
+        }
+    }
+    return answer
+}
 
 /**
  * Сложная (5 баллов)

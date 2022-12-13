@@ -169,12 +169,12 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    val pattern = Regex("""( *.+ (\d*\.\d*|\d*);*)+""")
+    val pattern = Regex("""( *.+ (\d*\.\d*|\d*);?)+""")
     var pairOfProduct: Pair<String, Double>
     val listOfProdutcs: List<String>
     var maxPrice = -1.0
     var expensiveProduct = ""
-    if (pattern.containsMatchIn(description)) {
+    if (pattern.matches(description)) {
         if (";" in description) {
             listOfProdutcs = description.split("; ").toMutableList()
             for (stringProduct in listOfProdutcs) {
@@ -217,11 +217,13 @@ fun fromRoman(roman: String): Int {
         "IV" to 4,
         "I" to 1
     )
+    val pattern = Regex("""(M)*((CM)*|(D)(C)*|(CD)|)*(C)*((XC)|(L)(X)*|(XL)(X)*)*(X)*((IX)|(V)*(I)*|(IV)|(I)*)""")
+//  Регекс проверяет всевозможные соединения римских цифр и возможность их отсутсвия
     var answer = 0
     var condition: Boolean
     var timeString: String
     var newNumber = 0
-    if (roman == "") return -1
+    if (!pattern.matches(roman)) return -1
     for (number in 0 until roman.count()) {
         if (!glossary.containsKey(roman[newNumber].toString())) return -1
         condition = true

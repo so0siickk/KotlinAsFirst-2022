@@ -104,7 +104,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val answer = mutableMapOf<Int, MutableList<String>>()
     for ((key, value) in grades) {
-        if (answer[value] != null) answer[value]!!.add(key)
+        if (answer[value] != null) answer.getOrPut(value) { mutableListOf(answer[value].toString()) }.add(key)
         else answer[value] = mutableListOf(key)
     }
     return answer
@@ -142,11 +142,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    val deleteMap = mutableSetOf<String>()
+    val deleteSet = mutableSetOf<String>()
     for ((key, _) in a) {
-        if (a[key] == b[key]) deleteMap.add(key)
+        if (a[key] == b[key]) deleteSet.add(key)
     }
-    for (key in deleteMap) {
+    for (key in deleteSet) {
         a.remove(key)
     }
 }
@@ -160,7 +160,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val answer = mutableSetOf<String>()
-    for (name in a.toSet()) if (name in b) answer.add(name)
+    for (name in a.toSet()) if (name in b.toSet()) answer.add(name)
     return answer.toList()
 }
 
@@ -188,7 +188,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
         if (!answers.contains(key)) {
             answers[key] = value
         } else {
-            if ((value != answers[key]!!)) answers[key] += (", $value")
+            if (value != answers[key]!!) answers[key] += (", $value")
         }
     }
     return answers
@@ -207,8 +207,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val sortedStockPrices = stockPrices.groupBy({ it.first }, { it.second })
     val answers = mutableMapOf<String, Double>()
-    for ((product, _) in sortedStockPrices) {
-        answers[product] = sortedStockPrices[product]!!.sum().div(sortedStockPrices[product]!!.size)
+    for ((product, prices) in sortedStockPrices) {
+        answers[product] = prices.sum().div(prices.size)
     }
     return answers
 }
@@ -371,7 +371,6 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     var answer = (-1 to -1)
     var sumOfTwo: Int
-    println(list)
     for (numberOne in list.size - 1 downTo 1) {
         sumOfTwo = list[numberOne]
         for (numberTwo in 0 until numberOne) {

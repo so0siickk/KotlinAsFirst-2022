@@ -5,6 +5,7 @@ package lesson6.task1
 import lesson1.task1.angleInRadian
 import java.lang.Exception
 import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import kotlin.math.max
 
@@ -223,7 +224,7 @@ fun fromRoman(roman: String): Int {
     var condition: Boolean
     var timeString: String
     var newNumber = 0
-    if ((!pattern.matches(roman))||(roman == "")) return -1
+    if ((!pattern.matches(roman)) || (roman == "")) return -1
     for (number in 0 until roman.count()) {
         if (!glossary.containsKey(roman[newNumber].toString())) return -1
         condition = true
@@ -359,3 +360,38 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TO
 //    } else throw IllegalArgumentException()
 //    return answerTax
 //}
+
+fun placesNames(
+    places: MutableList<MutableList<Boolean>>,
+    reqest: Map<String, Pair<Int, Int>>
+): Map<String, MutableList<Int>> {
+    val answer = mutableMapOf<String, MutableList<Int>>()
+    val truePlaces = places
+    var countNeedSeat: Int
+    var countOfEmptySeats: Int
+    for ((name, place) in reqest) {
+        countOfEmptySeats = 0
+        countNeedSeat = 0
+        if ((place.second < 0) || (place.first < 0) || (place.first > (places.count() - 1))) throw IllegalStateException()
+        for (i in places[place.first]) {
+            if (i) {
+                countOfEmptySeats++
+            }
+        }
+        if (countOfEmptySeats < place.second) throw IllegalStateException()
+        println(truePlaces)
+        for (i in 0 until truePlaces[place.first].count()) {
+            if (place.second == countNeedSeat) break
+            if (!truePlaces[place.first][i]) {
+                countNeedSeat++
+                truePlaces[place.first][i] = true
+                if (!answer.keys.contains(name)) answer[name] = mutableListOf(i)
+                else answer[name] = (answer[name]!! + i) as MutableList<Int>
+            }
+        }
+        if (place.second == 0) answer[name] = mutableListOf()
+        println(truePlaces)
+        println(answer)
+    }
+    return answer
+}

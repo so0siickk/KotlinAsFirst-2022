@@ -67,16 +67,23 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val outputFile = File(outputName).bufferedWriter()
+    val outputFile = File(outputName)
     for (line in File(inputName).readLines()) {
         if (line.isNotEmpty()) {
             if (line[0].toString() != "_") {
-                outputFile.write(line)
-                outputFile.newLine()
+                outputFile.bufferedWriter().use {
+//                    println(line)
+                    println(outputFile.readLines())
+                    it.write(line + "\n")
+                }
+                println(outputFile.readLines())
+//                File(outputName).bufferedWriter().use { out -> out.newLine() }
+//                outputFile.write(line)
+//                outputFile.newLine()
             }
-        } else outputFile.newLine()
+        } else outputFile.bufferedWriter().use { it.write("\n") }
+//            outputFile.newLine()
     }
-    outputFile.close()
 }
 
 /**
@@ -91,19 +98,18 @@ fun deleteMarked(inputName: String, outputName: String) {
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val answer = mutableMapOf<String, Int>()
     var countOfChar: Int
-    var newLine: String
-    val startSubstring = substrings.toSet()
+    val startSubstrings = substrings.toSet()
     var substringLow: String
     var currentList: List<String>
-    for (substring in startSubstring) {
+    for (substring in startSubstrings) {
         answer[substring] = 0
     }
-    for (line in File(inputName).readLines()) {
-        newLine = line.lowercase(Locale.getDefault())
-        for (substring in startSubstring) {
+    var lines: List<String> = (File(inputName).readLines()).map { it.lowercase(Locale.getDefault()) }
+    for (line in lines) {
+        for (substring in startSubstrings) {
             countOfChar = 0
             substringLow = substring.lowercase(Locale.getDefault())
-            currentList = newLine.windowed(substringLow.length, 1)
+            currentList = line.windowed(substringLow.length, 1)
             for (window in currentList) {
                 if (window == substringLow) countOfChar++
             }
@@ -246,6 +252,7 @@ fun top20Words(inputName: String): Map<String, Int> {
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     val outputFile = File(outputName).bufferedWriter()
     val newDictionary = mutableMapOf<Char, String>()
+    var newDictionaryString: String
     for ((key, value) in dictionary) {
         if (key == key.uppercaseChar()) newDictionary[key.lowercaseChar()] = value
         else newDictionary[key] = value
@@ -253,15 +260,16 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
     for (line in File(inputName).readLines()) {
         for (char in line) {
             if (newDictionary.keys.contains(char.lowercaseChar())) {
-                if ((char == char.uppercaseChar()) && (((char.hashCode() > 64) && (char.hashCode() < 91))
-                            || ((char.hashCode() > 1039) && (char.hashCode() < 1104)) ||
-                            ((char.hashCode() > 97) && (char).hashCode() < 123))
+                newDictionaryString = newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()).toString()
+                if ((char == char.uppercaseChar()) && (((char.code >= ('A').code) && (char.code < ('Z').code))
+                            || ((char.code > ('А').code) && (char.code < ('я').code)) ||
+                            ((char.code > ('a').code) && (char.code < ('z').code))
+                            )
                 ) {
                     outputFile.write(
-                        (newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()))?.capitalize().toString()
+                        newDictionaryString.capitalize()
                     )
-                } else
-                    outputFile.write(newDictionary[char]?.lowercase(Locale.getDefault()).toString())
+                } else outputFile.write(newDictionaryString)
             } else {
                 outputFile.write(char.toString())
             }

@@ -2,6 +2,8 @@
 
 package lesson9.task1
 
+import java.lang.IllegalArgumentException
+
 // Урок 9: проектирование классов
 // Максимальное количество баллов = 40 (без очень трудных задач = 15)
 
@@ -44,7 +46,19 @@ interface Matrix<E> {
  * height = высота, width = ширина, e = чем заполнить элементы.
  * Бросить исключение IllegalArgumentException, если height или width <= 0.
  */
-fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
+fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
+    val matrix = mutableListOf<List<E>>()
+    var newList = mutableListOf<E>()
+    for (y in 0 until height) {
+        for (x in 0 until width) {
+            newList.add(e)
+        }
+//        matrix.add(newList)
+        newList.clear()
+    }
+    println(matrix)
+    return matrix as Matrix<E>
+}
 
 /**
  * Средняя сложность (считается двумя задачами в 3 балла каждая)

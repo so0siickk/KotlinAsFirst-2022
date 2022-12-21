@@ -208,4 +208,74 @@ class Tests {
 //        }
 //        assertEquals(1000, lesson6.task1.taxCounter("20000 y.e. - 0%; 40000 y.e. - 5%; else - 25%", 40000))
 //    }
+
+    @Test
+    fun placesNames() {
+        assertEquals(
+            mapOf(
+                "Вася" to listOf(1, 2),
+                "Петя" to listOf(1)
+            ), lesson6.task1.placesNames(
+                listOf(
+                    listOf(true, false, false, false, true, false),
+                    listOf(true, false, true, false)
+                ) as MutableList<MutableList<Boolean>>,
+                mapOf(
+                    "Вася" to Pair(0, 2),
+                    "Петя" to Pair(1, 1)
+                )
+            )
+        )
+        assertEquals(
+            mapOf(
+                "Вася" to listOf(),
+                "Петя" to listOf(1)
+            ), lesson6.task1.placesNames(
+                listOf(
+                    listOf(true, false, false, false, true, false),
+                    listOf(true, false, true, false)
+                ) as MutableList<MutableList<Boolean>>,
+                mapOf(
+                    "Вася" to Pair(0, 0),
+                    "Петя" to Pair(1, 1)
+                )
+            )
+        )
+        assertThrows(IllegalStateException::class.java) {
+            lesson6.task1.placesNames(
+                listOf(
+                    listOf(true, false, true, true, true),
+                    listOf(false, false, false, false, false)
+                ) as MutableList<MutableList<Boolean>>,
+                mapOf(
+                    "Вася" to Pair(1, 5),
+                    "Петя" to Pair(1, 1)
+                )
+            )
+        }
+        assertThrows(IllegalStateException::class.java) {
+            lesson6.task1.placesNames(
+                listOf(
+                    listOf(),
+                    listOf(false, false, false, false, false)
+                ) as MutableList<MutableList<Boolean>>,
+                mapOf(
+                    "Вася" to Pair(1, 5),
+                    "Петя" to Pair(1, 1)
+                )
+            )
+        }
+        assertThrows(IllegalStateException::class.java) {
+            lesson6.task1.placesNames(
+                listOf(
+                    listOf(true, false, false, true),
+                    listOf(false, false, false, false, false)
+                ) as MutableList<MutableList<Boolean>>,
+                mapOf(
+                    "Вася" to Pair(1, -2),
+                    "Петя" to Pair(1, 1)
+                )
+            )
+        }
+    }
 }

@@ -261,9 +261,9 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
         for (char in line) {
             if (newDictionary.keys.contains(char.lowercaseChar())) {
                 newDictionaryString = newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()).toString()
-                if ((char == char.uppercaseChar()) && (((char.code >= ('A').code) && (char.code < ('Z').code))
-                            || ((char.code > ('А').code) && (char.code < ('я').code)) ||
-                            ((char.code > ('a').code) && (char.code < ('z').code))
+                if ((char == char.uppercaseChar()) && (((char.code >= ('A').code) && (char.code <= ('Z').code))
+                            || ((char.code >= ('А').code) && (char.code <= ('я').code)) ||
+                            ((char.code >= ('a').code) && (char.code <= ('z').code))
                             )
                 ) {
                     outputFile.write(

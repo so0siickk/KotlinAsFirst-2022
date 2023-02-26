@@ -124,6 +124,5 @@ class OpenHashSet<T>(val capacity: Int) {
         return hash
     }
 
-
     private fun getIndex(element: T): Int = (element.hashCode() % capacity)
 }

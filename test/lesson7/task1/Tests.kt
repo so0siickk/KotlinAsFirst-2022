@@ -1,9 +1,12 @@
 package lesson7.task1
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.io.File
+import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 
 class Tests {
 
@@ -444,5 +447,60 @@ Basic, Ruby, Swift.
         )
 
         File("temp.txt").delete()
+    }
+
+//    @Test
+//    fun highestScoreTeam() {
+//        assertThrows(IllegalArgumentException::class.java) {
+//            lesson7.task1.highestScoreTeam(
+//                "input/chaotic_in1.txt",
+//                "temp.txt"
+//            )
+//        }
+//        highestScoreTeam("input/exam.txt", "temp.txt")
+//        assertFileContent(
+//            "temp.txt",
+//            "[(Liquid , (3, 1)), (Team Spirit , (3, 1)), (Navi , (3, 0)), (Team Concert , (1, 0))]"
+//        )
+//        File("temp.txt").delete()
+//    }
+//    @Test
+//    fun square() {
+//        assertThrows(IllegalArgumentException::class.java) {
+//            lesson7.task1.square(
+//                "input/chaotic_in1.txt",
+//                "temp.txt",
+//                "A5-B6"
+//            )
+//        }
+//        assertThrows(IllegalArgumentException::class.java) {
+//            lesson7.task1.square(
+//                "input/exam.txt",
+//                "temp.txt", "as-dad"
+//            )
+//        }
+//        lesson7.task1.square("input/exam.txt", "temp.txt", "A2-B3")
+//        assertFileContent("temp.txt", "1.9925")
+//        File("temp.txt").delete()
+//    }
+//}
+
+//    @Test
+//    fun streeam() {
+//        lesson7.task1.stream("input/exam.txt", "temp.txt")
+//        assertFileContent("temp.txt", "Buster - 1321321")
+//        File("temp.txt").delete()
+//    }
+//}
+
+
+    @Test
+    fun dokaTournament() {
+//        assertThrows(IllegalStateException::class.java) {
+//            dokaTournament(
+//                "input/exam.txt"
+//            )
+//        }
+        assertEquals(listOf("Team Spirit "," VP "," Navi "," Team Secret "), lesson7.task1.dokaTournament("input/exam.txt"))
     }
 }

@@ -2,10 +2,12 @@
 
 package lesson7.task1
 
+import lesson10.task1.parseExpr
 import ru.spbstu.wheels.out
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileWriter
+import java.lang.IllegalArgumentException
 import java.util.*
 
 // Урок 7: работа с файлами
@@ -67,24 +69,25 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val outputFile = File(outputName)
-    for (line in File(inputName).readLines()) {
-        if (line.isNotEmpty()) {
-            if (line[0].toString() != "_") {
-                outputFile.bufferedWriter().use {
+    TODO()
+}//    val outputFile = File(outputName).bufferedWriter()
+//    for (line in File(inputName).readLines()) {
+//        if (line.isNotEmpty()) {
+//            if (line[0].toString() != "_")
+//                outputFile.use {
 //                    println(line)
-                    println(outputFile.readLines())
-                    it.write(line + "\n")
-                }
-                println(outputFile.readLines())
+//                    println(outputFile.readLines())
+//                    it.write(line + "\n")
+//                }
+//                println(outputFile.readLines())
 //                File(outputName).bufferedWriter().use { out -> out.newLine() }
 //                outputFile.write(line)
 //                outputFile.newLine()
-            }
-        } else outputFile.bufferedWriter().use { it.write("\n") }
+//            }
+//        } else outputFile.use { it.write("\n") }
 //            outputFile.newLine()
-    }
-}
+//    }
+//}
 
 /**
  * Средняя (14 баллов)
@@ -262,7 +265,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
             if (newDictionary.keys.contains(char.lowercaseChar())) {
                 newDictionaryString = newDictionary[char.lowercaseChar()]?.lowercase(Locale.getDefault()).toString()
                 if ((char == char.uppercaseChar()) && (((char.code >= ('A').code) && (char.code <= ('Z').code))
-                            || ((char.code >= ('А').code) && (char.code <= ('я').code)) ||
+                            || ((char >= 'А') && (char.code <= ('я').code)) ||
                             ((char.code >= ('a').code) && (char.code <= ('z').code))
                             )
                 ) {
@@ -523,3 +526,211 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
 
+//Экзамен
+//fun highestScoreTeam(inputName: String, outputName: String) {
+//    val startData = File(inputName).readLines()
+//    val outputFile = File(outputName).bufferedWriter()
+//    val testRegex = Regex("""(\w+ )+(\|[0-2]-[0-2])+""")
+//    val listOfTeams = mutableMapOf<String, Pair<Int, Int>>()
+//    var summPoints: Int
+//    var countWins: Int
+//    var points: String
+//    var status = true
+//    for (currentString in startData) {
+//        summPoints = 0
+//        countWins = 0
+//        if (!currentString.matches(testRegex)) throw IllegalArgumentException()
+//        points = currentString.replace(Regex("""(\w+ )+"""), "")
+//        for (score in 1..points.length step 4) {
+//            summPoints += points[score].toString().toInt()
+//            if (points[score].toString().toInt() == 2) countWins++
+//        }
+//        listOfTeams[currentString.replace(Regex("""(\|[0-2]-[0-2])+"""), "")] =
+//            Pair(summPoints, countWins)
+//    }
+//    val newTeams: MutableList<Pair<String, Pair<Int, Int>>> =
+//        listOfTeams.toList() as MutableList<Pair<String, Pair<Int, Int>>>
+//    while (status) {
+//        status = false
+//        for (numberTeam in 1 until newTeams.size) {
+//            if (newTeams[numberTeam].second.first > newTeams[numberTeam - 1].second.first) {
+//                Collections.swap(newTeams, numberTeam, numberTeam - 1)
+//                status = true
+//            }
+//            if (newTeams[numberTeam].second.first == newTeams[numberTeam - 1].second.first) {
+//                if (newTeams[numberTeam].second.second > newTeams[numberTeam - 1].second.second) {
+//                    Collections.swap(newTeams, numberTeam, numberTeam - 1)
+//                    status = true
+//                }
+//                if (newTeams[numberTeam].second.second == newTeams[numberTeam - 1].second.second) {
+//                    if (newTeams[numberTeam].first[0].toLowerCase().code <
+//                        newTeams[numberTeam - 1].first[0].toLowerCase().code
+//                    ) {
+//                        Collections.swap(newTeams, numberTeam, numberTeam - 1)
+//                        status = true
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    outputFile.use { it.write(newTeams.toString()) }
+//}
+
+
+//fun square(inputName: String, outputName: String, range: String) {
+//    val testRegex = Regex("""[A-Z]{1}\d+-[A-Z]{1}\d+""")
+//    val txtRegex = Regex("""((|-)\d*\.\d*(, |))+""")
+//    val startData = File(inputName).readLines()
+//    val outputFile = File(outputName).bufferedWriter()
+//    val codeLetterA = 65
+//    var listOfNumber: List<String>
+//    var summ = 0.0
+//    var count = 0
+//    if (!range.matches(testRegex)) throw IllegalArgumentException()
+//    for ((countOfString, currentString) in startData.withIndex()) {
+//        if (!currentString.matches(txtRegex)) throw IllegalArgumentException()
+//        if ((countOfString >= (range.replace(Regex("""\d"""), "").substringBefore("-")
+//                .toCharArray()[0].code - codeLetterA)) &&
+//            (countOfString <= (range.replace(Regex("""\d"""), "").substringAfter("-")
+//                .toCharArray()[0].code - codeLetterA))
+//        ) {
+//            listOfNumber = currentString.split(",")
+//            println(listOfNumber)
+//            for (number in listOfNumber.indices) {
+//                if ((number >= range.replace(Regex("""[A-Z]"""), "").substringBefore("-").toInt() - 1) &&
+//                    number <= range.replace(Regex("""[A-Z]"""), "").substringAfter("-").toInt() - 1
+//                ) {
+//                    summ += listOfNumber[number].toDouble()
+//                    count++
+//                }
+//            }
+//        }
+//
+//    }
+//    println(summ)
+//    println(count)
+//    outputFile.use { it.write((summ / count).toString()) }
+//}
+
+//fun stream(inputName: String, outputName: String) {
+//    val startData = File(inputName).readLines()
+//    val answer = File(outputName).bufferedWriter()
+//    val testRegex = Regex("""(\w+|[А-я]*): (\d*h:\d*m|\d*m), \d*""")
+//    val streamersStatistics = mutableMapOf<String, Double>()
+//    var time = 0.0
+//    var listStreamers = listOf<Pair<String, Double>>()
+//    var currentkey: String
+//    for (currentString in startData) {
+//        if (!currentString.contains(testRegex)) throw IllegalArgumentException()
+//        if (Regex("""\d*h:\d*m""") in currentString) time =
+//            currentString.replace(Regex("""(\w+|[А-я]*): """), "").replaceAfter("h", "").replace("h", "").toDouble() +
+//                    currentString.replace(Regex("""(\w+|[А-я]*): \d*h:"""), "").replaceAfter("m", "").replace("m", "")
+//                        .toDouble() / 60
+//        currentkey = currentString.replace(Regex(""": (\d*h:\d*m|\d*m), \d*"""), "")
+//        if (!streamersStatistics.keys.contains(currentkey))
+//            streamersStatistics[currentkey] =
+//                time * currentString.replaceBefore(',', "").replace(", ", "").toDouble()
+//        else streamersStatistics[currentkey] =
+//            streamersStatistics[currentkey]!! + time * currentString.replaceBefore(',', "").replace(", ", "").toDouble()
+//        listStreamers = streamersStatistics.toList()
+//        println(listStreamers.sortedBy { it.second }.reversed())
+//    }
+//    answer.use {
+//        for (streamer in listStreamers) {
+//            it.write("${streamer.first} -> ${streamer.second} \n")
+//        }
+//    }
+//}
+
+
+fun dokaTournament(inputName: String): List<String> {
+    val inputFile = File(inputName).readLines()
+    val testRegex = Regex("""(\w* )*(\|[0-2]*-([0-2]+| |))+""")
+    var listOfTeams = mutableListOf<Pair<String, Pair<Int, Int>>>()
+    val teamsString = mutableListOf<String>()
+    val listOfGames = mutableListOf<Pair<String, Pair<Int, Int>>>()
+    var numberGame = 0
+    var teamName: String
+    var gameResults: MutableList<String>
+    var count = true
+    var teamScore: Int
+    var teamWins: Int
+    for ((countString, currentString) in inputFile.withIndex()) {
+        teamScore = 0
+        teamWins = 0
+        numberGame = 0
+        if (!currentString.contains(testRegex)) throw IllegalStateException()
+        gameResults = currentString.split('|') as MutableList<String>
+        teamName = gameResults[0]
+        gameResults.removeAt(0)
+        for (result in gameResults) {
+            numberGame++
+//                countGames += 1
+            if (result[0] == '2') {
+                listOfGames += Pair("Win", Pair(countString + 1, numberGame))
+                teamScore += 2
+                teamWins++
+            }
+            if (result[0] == '1') {
+                teamScore++
+                listOfGames += Pair("Draw", Pair(countString + 1, numberGame))
+            }
+            if (result[0] == '0') listOfGames += Pair("Lose", Pair(countString + 1, numberGame))
+            if (result[0] == '-') listOfGames += Pair("Empty", Pair(countString + 1, numberGame))
+        }
+        listOfTeams.add(0, Pair(teamName, Pair(teamScore, teamWins)))
+    }
+    for (place in listOfGames) {
+        if (place.second.first == place.second.second) {
+            if (place.first != "Empty") throw java.lang.IllegalStateException()
+        }
+        if (place.first == "Draw") {
+            if (!listOfGames.contains(Pair("Draw", place.second.reverse()))) throw java.lang.IllegalStateException()
+        }
+        if (place.first == "Win") {
+            if (!listOfGames.contains(Pair("Lose", place.second.reverse()))) throw java.lang.IllegalStateException()
+        }
+        if (place.first == "Lose") {
+            if (!listOfGames.contains(Pair("Win", place.second.reverse()))) throw java.lang.IllegalStateException()
+        }
+        if (place.first == "Empty") {
+            if ((!listOfGames.contains(Pair("Empty", place.second.reverse())))) throw java.lang.IllegalStateException()
+        }
+    }
+    listOfTeams = listOfTeams.sortedBy { it.second.first }.reversed() as MutableList<Pair<String, Pair<Int, Int>>>
+    println(listOfTeams)
+    while (count) {
+        println(listOfTeams)
+        count = false
+        for (numberteam in 1 until listOfTeams.size) {
+            if (listOfTeams[numberteam - 1].second.first == listOfTeams[numberteam].second.first) {
+                if (listOfTeams[numberteam - 1].second.second < listOfTeams[numberteam].second.second) {
+                    Collections.swap(
+                        listOfTeams,
+                        numberteam - 1,
+                        numberteam
+                    )
+                    count = true
+                }
+                if (listOfTeams[numberteam - 1].second.second == listOfTeams[numberteam].second.second) {
+                    if (listOfTeams[numberteam - 1].first > listOfTeams[numberteam].first) {
+                        Collections.swap(
+                            listOfTeams,
+                            numberteam - 1,
+                            numberteam
+                        )
+                        count = true
+                    }
+                }
+            }
+        }
+
+    }
+    for (teams in listOfTeams) {
+        teamsString += teams.first
+    }
+    println(teamsString)
+    return teamsString
+}
+
+fun <A, B> Pair<A, B>.reverse() = Pair(second, first)

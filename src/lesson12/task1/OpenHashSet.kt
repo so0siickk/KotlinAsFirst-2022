@@ -28,13 +28,7 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Число элементов в хеш-таблице
      */
-    val size: Int
-        get() {
-            var count = 0
-            for (element in elements)
-                if (element != null) count++
-            return count
-        }
+    var size: Int = 0
 
     /**
      * Признак пустоты
@@ -57,12 +51,14 @@ class OpenHashSet<T>(val capacity: Int) {
                     if (elements[index] == element) return false
                     if (elements[index] == null) {
                         elements[index] = element
+                        size++
                         return true
                     }
                     index = (index + 1) % capacity
                 }
             }
             elements[index] = element
+            size++
             true
         }
     }
@@ -98,7 +94,7 @@ class OpenHashSet<T>(val capacity: Int) {
                 val startIndex = getIndex(element as T)
                 var index = getIndex(element as T)
                 if ((this.elements[index] == null) || (this.size != other.size)) return false
-                if (element === this.elements[index]) {
+                if (element == this.elements[index]) {
                     return true
                 } else {
                     index = (index + 1) % capacity
@@ -115,7 +111,7 @@ class OpenHashSet<T>(val capacity: Int) {
 
     override fun hashCode(): Int {
         var hash = 0
-        for (element in elements){
+        for (element in elements) {
             if (element != null) {
                 hash += Objects.hash(element)
             }

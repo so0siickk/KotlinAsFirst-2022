@@ -2,8 +2,6 @@
 
 package lesson12.task1
 
-import ru.spbstu.kotlin.typeclass.kind
-import ru.spbstu.wheels.NullableMonad.map
 import java.util.Objects
 
 /**
@@ -41,7 +39,7 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Признак пустоты
      */
-    fun isEmpty(): Boolean = (size == 0)
+    fun isEmpty(): Boolean = size == 0
 
     /**
      * Добавление элемента.
@@ -50,7 +48,7 @@ class OpenHashSet<T>(val capacity: Int) {
      */
     fun add(element: T): Boolean {
         val startIndex = getIndex(element)
-        var index = getIndex(element)
+        var index = startIndex
         return if ((size == capacity) || (elements[index] == element)) false
         else {
             if (elements[index] != null) {

@@ -92,7 +92,7 @@ class OpenHashSet<T>(val capacity: Int) {
         for (element in other.elements) {
             if (element != null) {
                 val startIndex = getIndex(element as T)
-                var index = getIndex(element as T)
+                var index = startIndex
                 if ((this.elements[index] == null) || (this.size != other.size)) return false
                 if (element == this.elements[index]) {
                     return true

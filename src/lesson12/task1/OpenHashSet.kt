@@ -22,7 +22,7 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Массив для хранения элементов хеш-таблицы
      */
-    internal var elements = Array<Any?>(capacity) { "" }
+    internal var elements = Array<Any?>(capacity) { Any() }
 
 
     /**
@@ -45,11 +45,11 @@ class OpenHashSet<T>(val capacity: Int) {
         var index = startIndex
         return if ((size == capacity) || (elements[index] == element)) false
         else {
-            if (elements[index] != "") {
+            if (elements[index] != Any()) {
                 index = (index + 1) % capacity
                 while (index != startIndex) {
                     if (elements[index] == element) return false
-                    if (elements[index] == "") {
+                    if (elements[index] == Any()) {
                         elements[index] = element
                         size++
                         return true
@@ -68,14 +68,14 @@ class OpenHashSet<T>(val capacity: Int) {
      */
     operator fun contains(element: T): Boolean {
         val startIndex = getIndex(element)
-        var index = getIndex(element)
+        var index = startIndex
         return if (elements[index] == element) true
         else {
-            if (elements[index] == "") return false
+            if (elements[index] == Any()) return false
             index = (index + 1) % capacity
             while (startIndex != index) {
                 if (elements[index] == element) return true
-                if (elements[index] == "") return false
+                if (elements[index] == Any()) return false
                 index = (index + 1) % capacity
             }
             false
@@ -88,20 +88,21 @@ class OpenHashSet<T>(val capacity: Int) {
      * и любой элемент из второй таблицы входит также и в первую
      */
     override fun equals(other: Any?): Boolean {
-        other as OpenHashSet<*>
-        for (element in other.elements) {
-            if (element != "") {
-                val startIndex = getIndex(element as T)
-                var index = startIndex
-                if ((this.elements[index] == "") || (this.size != other.size)) return false
-                if (element == this.elements[index]) {
-                    return true
-                } else {
-                    index = (index + 1) % capacity
-                    while (startIndex != index) {
-                        if (this.elements[index] == element) return true
-                        if (this.elements[index] == "") return false
+        if (other is OpenHashSet<*>) {
+            for (element in other.elements) {
+                if (element != Any()) {
+                    val startIndex = getIndex(element as T)
+                    var index = startIndex
+                    if ((this.elements[index] == Any()) || (this.size != other.size)) return false
+                    if (element == this.elements[index]) {
+                        return true
+                    } else {
                         index = (index + 1) % capacity
+                        while (startIndex != index) {
+                            if (this.elements[index] == element) return true
+                            if (this.elements[index] == Any()) return false
+                            index = (index + 1) % capacity
+                        }
                     }
                 }
             }
@@ -112,7 +113,7 @@ class OpenHashSet<T>(val capacity: Int) {
     override fun hashCode(): Int {
         var hash = 0
         for (element in elements) {
-            if (element != "") {
+            if ((element is String) || (element is Int) || (element is Double) || (element is Char)) {
                 hash += Objects.hash(element)
             }
         }

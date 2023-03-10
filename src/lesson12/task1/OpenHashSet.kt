@@ -22,7 +22,8 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Массив для хранения элементов хеш-таблицы
      */
-    internal var elements = Array<Any?>(capacity) { Any() }
+    private val emptyObject = Any()
+    internal var elements = Array<Any?>(capacity) { emptyObject }
 
 
     /**
@@ -45,11 +46,11 @@ class OpenHashSet<T>(val capacity: Int) {
         var index = startIndex
         return if ((size == capacity) || (elements[index] == element)) false
         else {
-            if (elements[index] != Any()) {
+            if (elements[index] != emptyObject) {
                 index = (index + 1) % capacity
                 while (index != startIndex) {
                     if (elements[index] == element) return false
-                    if (elements[index] == Any()) {
+                    if (elements[index] == emptyObject) {
                         elements[index] = element
                         size++
                         return true
@@ -71,11 +72,11 @@ class OpenHashSet<T>(val capacity: Int) {
         var index = startIndex
         return if (elements[index] == element) true
         else {
-            if (elements[index] == Any()) return false
+            if (elements[index] == emptyObject) return false
             index = (index + 1) % capacity
             while (startIndex != index) {
                 if (elements[index] == element) return true
-                if (elements[index] == Any()) return false
+                if (elements[index] == emptyObject) return false
                 index = (index + 1) % capacity
             }
             false
@@ -89,23 +90,15 @@ class OpenHashSet<T>(val capacity: Int) {
      */
     override fun equals(other: Any?): Boolean {
         if (other is OpenHashSet<*>) {
-            for (element in other.elements) {
-                if (element != Any()) {
-                    val startIndex = getIndex(element as T)
-                    var index = startIndex
-                    if ((this.elements[index] == Any()) || (this.size != other.size)) return false
-                    if (element == this.elements[index]) {
-                        return true
-                    } else {
-                        index = (index + 1) % capacity
-                        while (startIndex != index) {
-                            if (this.elements[index] == element) return true
-                            if (this.elements[index] == Any()) return false
-                            index = (index + 1) % capacity
-                        }
+            if (other.size != this.size) return false
+            for (element in this.elements) {
+                if (element != emptyObject) {
+                    if (!other.elements.contains(element)) {
+                        return false
                     }
                 }
             }
+            return true
         }
         return false
     }
@@ -113,7 +106,7 @@ class OpenHashSet<T>(val capacity: Int) {
     override fun hashCode(): Int {
         var hash = 0
         for (element in elements) {
-            if ((element is String) || (element is Int) || (element is Double) || (element is Char)) {
+            if (element != emptyObject) {
                 hash += Objects.hash(element)
             }
         }
